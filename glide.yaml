@@ -1,0 +1,70 @@
+package: src.paxautoma.com/paxautoma/operos
+import:
+- package: k8s.io/client-go
+  version: ^4.0.0
+  subpackages:
+  - kubernetes
+  - pkg/api
+  - pkg/api/v1
+  - pkg/apis/extensions/v1beta1
+  - tools/clientcmd
+- package: k8s.io/apimachinery
+  subpackages:
+  - pkg/api/errors
+- package: github.com/stretchr/testify
+  version: ^1.1.4
+- package: github.com/sirupsen/logrus
+  version: ^1.0.2
+- package: github.com/jroimartin/gocui
+  version: master
+- package: github.com/pkg/errors
+  version: ^0.8.0
+- package: github.com/rlisagor/dhcp4client
+  version: fix-timeouts
+- package: github.com/cloudflare/cfssl
+  version: ^1.2.0
+  subpackages:
+  - cli/genkey
+  - config
+  - csr
+  - helpers
+  - log
+  - signer
+  - signer/local
+- package: google.golang.org/grpc
+  version: ^1.5.2
+- package: golang.org/x/net
+  version: master
+- package: golang.org/x/text
+  version: master
+- package: github.com/godbus/dbus
+  version: ^4.0.0
+- package: github.com/coreos/go-systemd
+  version: v15
+- package: github.com/wercker/journalhook
+- package: github.com/coreos/etcd
+  version: ^3.2.7
+  subpackages:
+  - clientv3
+- package: github.com/gorilla/mux
+  version: ^1.4.0
+- package: github.com/gorilla/handlers
+  version: ^1.2.1
+- package: golang.org/x/crypto
+  version: master
+- package: github.com/amoghe/go-crypt
+- package: golang.org/x/sys
+  version: master
+  subpackages:
+  - unix
+- package: github.com/golang/protobuf
+  version: master
+- package: github.com/google/uuid
+  version: ^0.2.0
+- package: github.com/grpc-ecosystem/grpc-gateway
+  version: ^1.2.2
+- package: google.golang.org/genproto
+- package: github.com/grpc-ecosystem/go-grpc-middleware
+- package: github.com/gorilla/sessions
+  version: ^1.1.0
+- package: github.com/msteinert/pam

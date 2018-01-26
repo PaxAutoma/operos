@@ -1,0 +1,6 @@
+NAME="Operos Worker"
+PRETTY_NAME="Operos Worker"
+ID=operos
+ID_LIKE=archlinux
+ANSI_COLOR="0;36"
+HOME_URL="https://www.paxautoma.com/"

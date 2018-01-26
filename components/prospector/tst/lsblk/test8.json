@@ -1,0 +1,12 @@
+{
+   "blockdevices": [
+      {"mountpoint": "/run/archiso/sfs/airootfs", "name": "loop0", "kname": "loop0", "model": null, "serial": null, "size": "510.6M", "rota": "1", "type": "loop"},
+      {"mountpoint": null, "name": "sda", "kname": "sda", "model": "VBOX HARDDISK   ", "serial": "VB602342342343464-33123123123", "size": "40G", "rota": "1", "type": "disk",
+         "children": [
+            {"mountpoint": null, "name": "sda1", "kname": "sda1", "model": null, "serial": null, "size": "20G", "rota": "1", "type": "part"},
+            {"mountpoint": null, "name": "sda2", "kname": "sda2", "model": null, "serial": null, "size": "20G", "rota": "1", "type": "part"}
+         ]
+      },
+      {"mountpoint": "/run/archiso/bootmnt", "name": "sr0", "kname": "sr0", "model": "CD-ROM          ", "serial": "VB0-01f031234234234", "size": "572M", "rota": "1", "type": "rom"}
+   ]
+}

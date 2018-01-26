@@ -1,0 +1,11 @@
+[Unit]
+Description=Kubernetes add-ons
+Requires=kubelet.service
+After=kubelet.service
+
+[Service]
+Type=oneshot
+ExecStart=/etc/systemd/scripts/start-addons
+
+[Install]
+WantedBy=multi-user.target

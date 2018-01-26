@@ -1,0 +1,11 @@
+[Unit]
+Description=Worker partitions initialization
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=/etc/systemd/scripts/make-partitions.sh start
+ExecStop=/etc/systemd/scripts/make-partitions.sh stop
+
+[Install]
+WantedBy=multi-user.target

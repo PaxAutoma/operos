@@ -1,0 +1,18 @@
+[Unit]
+Description=IPv4 DHCP server on %I
+After=network.target network-online.target
+Wants=network-online.target 
+
+[Service]
+Type=forking
+PIDFile=/run/dhcpd4.pid
+ExecStart=/usr/bin/dhcpd -4 -q -user dhcp -cf /etc/dhcpd.conf -pf /run/dhcpd4.pid %I
+ProtectSystem=full
+ProtectHome=on
+KillSignal=SIGINT
+RestartSec=2
+Restart=on-failure
+StartLimitInterval=12s
+
+[Install]
+WantedBy=multi-user.target

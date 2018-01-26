@@ -1,0 +1,23 @@
+[Unit]
+Description=TTY status display
+After=systemd-journald.service
+
+[Service]
+EnvironmentFile=/etc/paxautoma/settings
+ExecStart=-/sbin/agetty --noclear -o "--private-if ${CONTROLLER_PRIVATE_IF} --public-if ${CONTROLLER_PUBLIC_IF} --node-type Controller --kube-url http://localhost:8080" -l /usr/bin/statustty -n tty1 $TERM
+Type=simple
+Restart=always
+RestartSec=0
+UtmpIdentifier=tty1
+TTYPath=/dev/tty1
+TTYReset=yes
+TTYVHangup=yes
+TTYVTDisallocate=yes
+KillMode=none
+
+# Unset locale for the console getty since the console has problems
+# displaying some internationalized messages.
+Environment=LANG= LANGUAGE= LC_CTYPE= LC_NUMERIC= LC_TIME= LC_COLLATE= LC_MONETARY= LC_MESSAGES= LC_PAPER= LC_NAME= LC_ADDRESS= LC_TELEPHONE= LC_MEASUREMENT= LC_IDENTIFICATION=
+
+[Install]
+WantedBy=multi-user.target

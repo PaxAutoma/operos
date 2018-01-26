@@ -1,0 +1,16 @@
+{
+   "blockdevices": [
+      {"mountpoint": "/mnt/worker_image", "name": "loop0", "kname": "loop0", "model": null, "serial": null, "size": "565M", "rota": "1", "type": "loop"},
+      {"mountpoint": null, "name": "sda", "kname": "sda", "model": "VBOX HARDDISK   ", "serial": "VB5234234234-de234234", "size": "38G", "rota": "1", "type": "disk",
+         "children": [
+            {"mountpoint": null, "name": "sda1", "kname": "sda1", "model": null, "serial": null, "size": "1M", "rota": "1", "type": "part"},
+            {"mountpoint": "/efi", "name": "sda2", "kname": "sda2", "model": null, "serial": null, "size": "512M", "rota": "1", "type": "part"},
+            {"mountpoint": "/boot", "name": "sda3", "kname": "sda3", "model": null, "serial": null, "size": "1G", "rota": "1", "type": "part"},
+            {"mountpoint": "[SWAP]", "name": "sda4", "kname": "sda4", "model": null, "serial": null, "size": "4G", "rota": "1", "type": "part"},
+            {"mountpoint": null, "name": "sda5", "kname": "sda5", "model": null, "serial": null, "size": "8G", "rota": "1", "type": "part"},
+            {"mountpoint": "/", "name": "sda6", "kname": "sda6", "model": null, "serial": null, "size": "24.5G", "rota": "1", "type": "part"}
+         ]
+      },
+      {"mountpoint": null, "name": "sr0", "kname": "sr0", "model": "CD-ROM          ", "serial": "VB2-01234234234", "size": "1024M", "rota": "1", "type": "rom"}
+   ]
+}

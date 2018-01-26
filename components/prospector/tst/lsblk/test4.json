@@ -1,0 +1,29 @@
+{
+   "blockdevices": [
+      {"mountpoint": null, "name": "sda", "kname": "sda", "model": "ST3000DM001-1ER1", "serial": "ZDSFL8C", "size": "2.7T", "rota": "1", "type": "disk",
+         "children": [
+            {"mountpoint": "/home/medialib/media", "name": "sda1", "kname": "sda1", "model": null, "serial": null, "size": "2.7T", "rota": "1", "type": "part"}
+         ]
+      },
+      {"mountpoint": null, "name": "sdb", "kname": "sdb", "model": "SAMSUNG SP1614C ", "serial": "S345345754190", "size": "149.1G", "rota": "1", "type": "disk",
+         "children": [
+            {"mountpoint": null, "name": "sdb1", "kname": "sdb1", "model": null, "serial": null, "size": "78.1G", "rota": "1", "type": "part"},
+            {"mountpoint": null, "name": "sdb2", "kname": "sdb2", "model": null, "serial": null, "size": "70.9G", "rota": "1", "type": "part"}
+         ]
+      },
+      {"mountpoint": null, "name": "sdd", "kname": "sdd", "model": "ST3000DM001-1ER1", "serial": "Z4534577", "size": "2.7T", "rota": "1", "type": "disk",
+         "children": [
+            {"mountpoint": "/home", "name": "sdd1", "kname": "sdd1", "model": null, "serial": null, "size": "2.7T", "rota": "1", "type": "part"}
+         ]
+      },
+      {"mountpoint": null, "name": "sde", "kname": "sde", "model": "KINGSTON SV300S3", "serial": "503453459347598A", "size": "223.6G", "rota": "0", "type": "disk",
+         "children": [
+            {"mountpoint": "/", "name": "sde1", "kname": "sde1", "model": null, "serial": null, "size": "223.6G", "rota": "0", "type": "part"}
+         ]
+      },
+      {"mountpoint": null, "name": "sr0", "kname": "sr0", "model": "CDDVDW SH-S203B ", "serial": null, "size": "1024M", "rota": "1", "type": "rom"},
+      {"mountpoint": "/snap/core/3247", "name": "loop0", "kname": "loop0", "model": null, "serial": null, "size": "83.1M", "rota": "1", "type": "loop"},
+      {"mountpoint": "/snap/core/3017", "name": "loop1", "kname": "loop1", "model": null, "serial": null, "size": "83M", "rota": "1", "type": "loop"},
+      {"mountpoint": "/snap/core/2898", "name": "loop2", "kname": "loop2", "model": null, "serial": null, "size": "81.4M", "rota": "1", "type": "loop"}
+   ]
+}

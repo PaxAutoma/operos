@@ -1,0 +1,13 @@
+[Unit]
+Description=Operos Cluster Configuration Store
+
+[Service]
+Type=notify
+Restart=always
+RestartSec=5s
+LimitNOFILE=40000
+TimeoutStartSec=0
+ExecStart=/usr/bin/etcd --name operos-cluster-cfg0 --data-dir /var/operos/cfg --initial-advertise-peer-urls https://127.0.0.1:4280 --listen-peer-urls http://127.0.0.1:4280 --advertise-client-urls http://127.0.0.1:4279 --listen-client-urls http://127.0.0.1:4279 --initial-cluster operos-cluster-cfg0=https://127.0.0.1:4280 --auto-compaction-retention 1 
+
+[Install]
+WantedBy=multi-user.target

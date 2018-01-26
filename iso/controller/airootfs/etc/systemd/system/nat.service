@@ -1,0 +1,13 @@
+[Unit]
+Description=NAT
+Before=network-pre.target
+Wants=network-pre.target
+
+[Service]
+Type=oneshot
+EnvironmentFile=/etc/paxautoma/settings
+ExecStart=/etc/systemd/scripts/nat
+RemainAfterExit=yes
+
+[Install]
+WantedBy=multi-user.target

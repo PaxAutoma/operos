@@ -1,0 +1,5 @@
+haveged
+mkinitcpio-nfs-utils
+syslinux
+zsh
+efitools

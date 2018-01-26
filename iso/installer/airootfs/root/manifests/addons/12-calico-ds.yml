@@ -1,0 +1,114 @@
+# This manifest installs the calico/node container on each master and worker
+# node in a Kubernetes cluster.
+kind: DaemonSet
+apiVersion: extensions/v1beta1
+metadata:
+  name: calico-node
+  namespace: operos
+  labels:
+    k8s-app: calico-node
+spec:
+  selector:
+    matchLabels:
+      k8s-app: calico-node
+  template:
+    metadata:
+      labels:
+        k8s-app: calico-node
+      annotations:
+        # This, along with the CriticalAddonsOnly toleration below,
+        # marks the pod as a critical add-on, ensuring it gets
+        # priority scheduling and that its resources are reserved
+        # if it ever gets evicted.
+        scheduler.alpha.kubernetes.io/critical-pod: ''
+    spec:
+      hostNetwork: true
+      serviceAccountName: calico-node
+      tolerations:
+        # Allow the pod to run on the master.  This is required for
+        # the master to communicate with pods.
+        - key: node-role.kubernetes.io/master
+          operator: Exists
+        # Mark the pod as a critical add-on for rescheduling.
+        - key: CriticalAddonsOnly
+          operator: Exists
+      containers:
+        # Runs calico/node container on each Kubernetes node.  This
+        # container programs network policy and routes on each
+        # host.
+        - name: calico-node
+          image: quay.io/calico/node:v${OPEROS_CALICO_VERSION}
+          imagePullPolicy: Never
+          env:
+            # Use Kubernetes API as the backing datastore.
+            - name: DATASTORE_TYPE
+              value: "kubernetes"
+            # Enable felix info logging.
+            - name: FELIX_LOGSEVERITYSCREEN
+              value: "info"
+            # Disable file logging so `kubectl logs` works.
+            - name: CALICO_DISABLE_FILE_LOGGING
+              value: "true"
+            # Set Felix endpoint to host default action to ACCEPT.
+            - name: FELIX_DEFAULTENDPOINTTOHOSTACTION
+              value: "ACCEPT"
+            # Disable IPV6 on Kubernetes.
+            - name: FELIX_IPV6SUPPORT
+              value: "false"
+            # Wait for the datastore.
+            - name: WAIT_FOR_DATASTORE
+              value: "true"
+            # The Calico IPv4 pool to use.  This should match `--cluster-cidr`
+            - name: CALICO_IPV4POOL_CIDR
+              value: "${OPEROS_POD_CIDR}"
+            # Enable IPIP
+            - name: CALICO_IPV4POOL_IPIP
+              value: "off"
+            # Enable IP-in-IP within Felix.
+            - name: FELIX_IPINIPENABLED
+              value: "false"
+            # Set based on the k8s node name.
+            - name: NODENAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: spec.nodeName
+            # Autodetect the IP address from the private interface
+            - name: IP
+              value: autodetect
+            # Run BGP on the internal interface
+            - name: IP_AUTODETECTION_METHOD
+              value: interface=(${CONTROLLER_PRIVATE_IF}|eth0)
+            - name: FELIX_HEALTHENABLED
+              value: "true"
+          securityContext:
+            privileged: true
+          resources:
+            requests:
+              cpu: 250m
+          livenessProbe:
+            httpGet:
+              path: /liveness
+              port: 9099
+            periodSeconds: 10
+            initialDelaySeconds: 10
+            failureThreshold: 6
+          readinessProbe:
+            httpGet:
+              path: /readiness
+              port: 9099
+            periodSeconds: 10
+          volumeMounts:
+            - mountPath: /lib/modules
+              name: lib-modules
+              readOnly: true
+            - mountPath: /var/run/calico
+              name: var-run-calico
+              readOnly: false
+      volumes:
+        # Used by calico/node.
+        - name: lib-modules
+          hostPath:
+            path: /lib/modules
+        - name: var-run-calico
+          hostPath:
+            path: /var/run/calico

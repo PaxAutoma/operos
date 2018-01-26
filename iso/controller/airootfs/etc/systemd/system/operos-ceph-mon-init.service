@@ -1,0 +1,15 @@
+[Unit]
+Description=Initialize Operos ceph mon
+Requires=operos-cfg-store.service
+After=operos-cfg-store.service
+After=network-online.target
+Wants=network-online.target
+Before=teamster.service
+
+[Service]
+EnvironmentFile=/etc/paxautoma/settings
+Type=oneshot
+ExecStart=/etc/systemd/scripts/ceph-mon-init
+
+[Install]
+WantedBy=multi-user.target

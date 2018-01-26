@@ -1,0 +1,77 @@
+/*
+Copyright 2018 Pax Automa Systems, Inc.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+   http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*/
+
+syntax = "proto3";
+package waterfront;
+
+import "google/api/annotations.proto";
+
+message Empty {}
+
+enum NodeStatus {
+    NOT_READY = 0;
+    READY = 1;
+}
+
+message Node {
+    string id = 1;
+    NodeStatus status = 2;
+    string ip = 3;
+    string pod_cidr = 4;
+    string hardware_info = 5;
+}
+
+message ListNodesResponse {
+    repeated Node nodes = 1;
+}
+
+message GetNodeRequest {
+    string id = 1;
+}
+
+message GetNodeResponse {
+    Node node = 1;
+}
+
+message GetClusterInfoResponse {
+    int64 license_expiry = 1;
+    map<string, string> settings = 2;
+}
+
+message SetRootPasswordRequest {
+    string password = 1;
+}
+
+service Waterfront {
+    rpc ListNodes (Empty) returns (ListNodesResponse) {
+        option (google.api.http).get = "/v1/nodes";
+    }
+
+    rpc GetNode (GetNodeRequest) returns (GetNodeResponse) {
+        option (google.api.http).get = "/v1/nodes/{id}";
+    }
+
+    rpc GetClusterInfo (Empty) returns (GetClusterInfoResponse) {
+        option (google.api.http).get = "/v1/cluster_info";
+    }
+
+    rpc SetRootPassword (SetRootPasswordRequest) returns (Empty) {
+        option (google.api.http) = {
+            post: "/v1/rootpass"
+            body: "*"
+        };
+    }
+}

@@ -1,0 +1,13 @@
+{
+   "blockdevices": [
+      {"mountpoint": null, "name": "sda", "kname": "sda", "model": "Samsung SSD 840 ", "serial": "SSDFSDFSADF01H", "size": "477G", "rota": "0", "type": "disk",
+         "children": [
+            {"mountpoint": "/", "name": "sda1", "kname": "sda1", "model": null, "serial": null, "size": "461.2G", "rota": "0", "type": "part"},
+            {"mountpoint": null, "name": "sda2", "kname": "sda2", "model": null, "serial": null, "size": "1K", "rota": "0", "type": "part"},
+            {"mountpoint": "[SWAP]", "name": "sda5", "kname": "sda5", "model": null, "serial": null, "size": "15.7G", "rota": "0", "type": "part"}
+         ]
+      },
+      {"mountpoint": "/snap/hello-world/27", "name": "loop0", "kname": "loop0", "model": null, "serial": null, "size": "20K", "rota": "1", "type": "loop"},
+      {"mountpoint": "/snap/shotcut/9", "name": "loop1", "kname": "loop1", "model": null, "serial": null, "size": "820.9M", "rota": "1", "type": "loop"}
+   ]
+}

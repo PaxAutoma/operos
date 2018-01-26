@@ -1,0 +1,7 @@
+efibootmgr
+etcd
+grub
+ipmitool
+nmap
+tftp-hpa
+dhcp

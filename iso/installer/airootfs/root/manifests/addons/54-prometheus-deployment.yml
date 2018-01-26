@@ -1,0 +1,78 @@
+kind: Deployment
+apiVersion: apps/v1beta2
+metadata:
+  labels:
+    name: prometheus
+  name: prometheus
+  namespace: operos
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: prometheus
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+    type: RollingUpdate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        name: prometheus
+
+
+    spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: node-role.kubernetes.io/master
+                operator: In
+                values:
+                - "true"
+      schedulerName: default-scheduler
+      tolerations:
+      - key: node-role.kubernetes.io/master
+        operator: Exists    
+
+      containers:
+      - args:
+        - --config.file=/etc/prometheus/prometheus.yml        
+        command:
+        - /bin/prometheus
+        image: quay.io/prometheus/prometheus:${OPEROS_PROMETHEUS_VERSION}
+        imagePullPolicy: Never
+        name: prometheus
+        ports:
+        - containerPort: 9090
+          protocol: TCP
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 9090
+          initialDelaySeconds: 30
+          periodSeconds: 30
+          timeoutSeconds: 5
+        resources:
+          limits:
+            cpu: 750m
+            memory: 450Mi
+          requests:
+            cpu: 200m
+            memory: 300Mi
+        volumeMounts:
+        - mountPath: /prometheus
+          name: data
+        - mountPath: /etc/prometheus
+          name: config-volume
+      restartPolicy: Always
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+      volumes:
+      - emptyDir: {}
+        name: data
+      - configMap:
+          name: prometheus-config
+        name: config-volume

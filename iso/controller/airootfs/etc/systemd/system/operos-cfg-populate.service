@@ -1,0 +1,13 @@
+[Unit]
+Description=Initialize Operos configuration
+Requires=operos-cfg-store.service
+After=operos-cfg-store.service
+Before=teamster.service
+
+[Service]
+EnvironmentFile=/etc/paxautoma/settings
+Type=oneshot
+ExecStart=/etc/systemd/scripts/operos-cfg-populate
+
+[Install]
+WantedBy=multi-user.target

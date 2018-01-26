@@ -1,0 +1,49 @@
+// Copyright 2018 Pax Automa Systems, Inc.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//    http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+syntax = "proto3";
+package teamster;
+
+message Empty {}
+
+message NodeSummary {
+    string uuid = 1;
+}
+
+message ListNodesResponse {
+    repeated NodeSummary nodes = 1;
+}
+
+message GetNodeHardwareRequest {
+    string uuid = 1;
+}
+
+message GetNodeHardwareResponse {
+    string hardware_info = 1;
+}
+
+message GetCACertExpiryResponse {
+    int64 expiry_unix = 1;
+}
+
+message SetRootPasswordRequest {
+    string password = 1;
+}
+
+service Teamster {
+    rpc ListNodes (Empty) returns (ListNodesResponse);
+    rpc GetNodeHardware (GetNodeHardwareRequest) returns (GetNodeHardwareResponse);
+    rpc GetCACertExpiry (Empty) returns (GetCACertExpiryResponse);
+    rpc SetRootPassword (SetRootPasswordRequest) returns (Empty);
+}

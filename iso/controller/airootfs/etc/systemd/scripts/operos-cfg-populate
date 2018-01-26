@@ -1,0 +1,46 @@
+#!/bin/bash -xe
+# Copyright 2018 Pax Automa Systems, Inc.
+# 
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+# 
+#    http://www.apache.org/licenses/LICENSE-2.0
+# 
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+export ETCDCTL_API=3
+
+etcd_cmd () {
+	/usr/bin/etcdctl --endpoints=http://127.0.0.1:4279  "$@"
+}
+
+IS_CONFIGED=$(etcd_cmd get cluster/$OPEROS_INSTALL_ID/CLUSTER_BIRTH_DATE)
+if [ -z "$IS_CONFIGED" ] ; then
+    IFS="" 
+    while read -r l; do
+        var=${l/=*}
+        val=${l/*=}
+        etcd_cmd put "cluster/$OPEROS_INSTALL_ID/$var" "${val//\"}"
+    done < <(cat /etc/paxautoma/settings | sed -e '/^$/d' -e '/^#/d')
+	
+    # ca.pem is the bundle of CA certs. If the controller is a self-signed root
+    # CA then this bundle is equivalent to controller-ca.pem. However, if the
+    # controller's CA cert is signed by a higher-level authority, then this
+    # bundle will include the entire certificate chain.  controller-ca.pem will
+    # be only the controller CA cert itself.
+    cat /etc/kubernetes/ssl/ca.pem | etcd_cmd put "cluster/$OPEROS_INSTALL_ID/secret-ca-bundle"
+    cat /etc/kubernetes/ssl/controller-ca-key.pem | etcd_cmd put "cluster/$OPEROS_INSTALL_ID/secret-ca-key"
+    cat /etc/kubernetes/ssl/controller-ca.pem | etcd_cmd put "cluster/$OPEROS_INSTALL_ID/secret-ca-cert"
+
+    if [ -e /etc/paxautoma/testkey.pub ]; then
+        cat /etc/paxautoma/testkey.pub | etcd_cmd put "cluster/$OPEROS_INSTALL_ID/authorized-keys/worker/test"
+    fi
+    cat /root/.ssh/id_rsa.pub | etcd_cmd put "cluster/$OPEROS_INSTALL_ID/authorized-keys/worker/controller"
+
+    etcd_cmd put "cluster/$OPEROS_INSTALL_ID/CLUSTER_BIRTH_DATE" "$(env TZ=UTC date --rfc-3339=seconds)"
+fi

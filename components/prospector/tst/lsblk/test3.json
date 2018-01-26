@@ -1,0 +1,18 @@
+{
+   "blockdevices": [
+      {"mountpoint": null, "name": "sda", "kname": "sda", "model": "iSCSI Storage   ", "serial": "6a50asdasadc6bd9", "size": "40G", "rota": "1", "type": "disk",
+         "children": [
+            {"mountpoint": "/boot", "name": "sda1", "kname": "sda1", "model": null, "serial": null, "size": "487M", "rota": "1", "type": "part"},
+            {"mountpoint": null, "name": "sda2", "kname": "sda2", "model": null, "serial": null, "size": "1K", "rota": "1", "type": "part"},
+            {"mountpoint": null, "name": "sda5", "kname": "sda5", "model": null, "serial": null, "size": "39.5G", "rota": "1", "type": "part",
+               "children": [
+                  {"mountpoint": "/", "name": "shell--vg-root", "kname": "dm-0", "model": null, "serial": null, "size": "39G", "rota": "1", "type": "lvm"},
+                  {"mountpoint": "[SWAP]", "name": "shell--vg-swap_1", "kname": "dm-1", "model": null, "serial": null, "size": "508M", "rota": "1", "type": "lvm"}
+               ]
+            }
+         ]
+      },
+      {"mountpoint": null, "name": "sr0", "kname": "sr0", "model": "QEMU DVD-ROM    ", "serial": "QM00001", "size": "655M", "rota": "1", "type": "rom"},
+      {"mountpoint": null, "name": "sr1", "kname": "sr1", "model": "QEMU DVD-ROM    ", "serial": "QM00002", "size": "1024M", "rota": "1", "type": "rom"}
+   ]
+}

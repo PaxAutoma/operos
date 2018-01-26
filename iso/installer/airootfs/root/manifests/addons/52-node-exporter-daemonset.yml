@@ -1,0 +1,71 @@
+apiVersion: extensions/v1beta1
+kind: DaemonSet
+metadata:
+  name: node-exporter
+  namespace: operos
+  labels:
+    name: node-exporter
+spec:
+  template:
+    metadata:
+      labels:
+        name: node-exporter
+    spec:
+      hostPID: true
+      hostIPC: true
+      hostNetwork: true
+      tolerations:
+        - key: node-role.kubernetes.io/master
+          operator: Exists          
+      containers:
+        - ports:
+            - containerPort: 9100
+              protocol: TCP
+          resources:
+            requests:
+              cpu: 100m
+              memory: 200Mi
+            limits:
+              cpu: 350m
+              memory: 512Mi
+          securityContext:
+            privileged: true
+          image: prom/node-exporter:${OPEROS_NODE_EXPORTER_VERSION}
+          imagePullPolicy: Never
+          livenessProbe:
+            httpGet:
+              path: /metrics
+              port: 9100
+            initialDelaySeconds: 30
+            periodSeconds: 30
+            timeoutSeconds: 3
+          args:
+            - -collector.procfs
+            - /host/proc
+            - -collector.sysfs
+            - /host/sys
+            - -collector.filesystem.ignored-mount-points
+            - '"^/(sys|proc|dev|host|etc)($|/)"'
+          name: node-exporter
+          volumeMounts:
+            - name: dev
+              mountPath: /host/dev
+            - name: proc
+              mountPath: /host/proc
+            - name: sys
+              mountPath: /host/sys
+            - name: rootfs
+              mountPath: /rootfs
+      volumes:
+        - name: proc
+          hostPath:
+            path: /proc
+        - name: dev
+          hostPath:
+            path: /dev
+        - name: sys
+          hostPath:
+            path: /sys
+        - name: rootfs
+          hostPath:
+            path: /

@@ -1,0 +1,26 @@
+[Unit]
+Description=Operos Worker Image Server
+Requires=operos-cfg-store.service
+Requires=load-images.service
+After=load-images.service
+
+[Service]
+TimeoutStartSec=0
+Restart=always
+RestartSec=5s
+EnvironmentFile=/etc/paxautoma/settings
+ExecStartPre=-/usr/bin/docker rm operos-image-server
+ExecStart=/usr/bin/docker run \
+    -p ${OPEROS_CONTROLLER_IP}:5080:80 \
+    --rm \
+    --name operos-image-server \
+    -v /etc/paxautoma/iso:/usr/share/nginx/html \
+    -v /boot:/usr/share/nginx/html/boot \
+    -v /run/archiso/bootmnt/operos:/usr/share/nginx/html/operos \
+    -v /opt/docker-images:/usr/share/nginx/html/images \
+    nginx:${OPEROS_NGINX_VERSION}
+ExecStop=/usr/bin/docker stop operos-image-server
+KillMode=none
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,77 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto:300,400,500');
+
+@font-face {
+  font-family: 'Material Icons';
+  font-style: normal;
+  font-weight: 400;
+  src: url(/static/fonts/MaterialIcons-Regular.eot); /* For IE6-8 */
+  src: local('Material Icons'),
+    local('MaterialIcons-Regular'),
+    url(/static/fonts/MaterialIcons-Regular.woff2) format('woff2'),
+    url(/static/fonts/MaterialIcons-Regular.woff) format('woff'),
+    url(/static/fonts/MaterialIcons-Regular.ttf) format('truetype');
+}
+
+.material-icons {
+  font-family: 'Material Icons';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;  /* Preferred icon size */
+  display: inline-block;
+  line-height: 1;
+  text-transform: none;
+  letter-spacing: normal;
+  word-wrap: normal;
+  white-space: nowrap;
+  direction: ltr;
+
+  /* Support for all WebKit browsers. */
+  -webkit-font-smoothing: antialiased;
+  /* Support for Safari and Chrome. */
+  text-rendering: optimizeLegibility;
+
+  /* Support for Firefox. */
+  -moz-osx-font-smoothing: grayscale;
+
+  /* Support for IE. */
+  font-feature-settings: 'liga';
+}
+
+a {
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+html {
+  font-family: 'Roboto', sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+body, h1, h2, h3, h4, h5, h6 {
+  margin: 0;
+}
+
+body {
+  font-size: 14px;
+  line-height: 24px;
+}
+/* 
+.vizceral {
+  height: 100%;
+  width: 100%;
+} */
+
+/*.vizceral {
+  display: initial;
+  text-align: left;
+  width: 100%;
+  background-color: rgb(35, 35, 35);
+}
+
+.vizceral canvas {
+  height: 600px !important;
+}
+*/

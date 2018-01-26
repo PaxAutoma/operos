@@ -1,0 +1,16 @@
+calico-cni
+calicoctl
+ceph
+chrony
+cni
+cni-plugins
+docker
+kubernetes
+net-tools
+gnu-netcat
+openssh
+socat
+tcpdump
+bc
+lshw
+gdisk

@@ -1,0 +1,11 @@
+{
+   "blockdevices": [
+      {"mountpoint": null, "name": "xvda", "kname": "xvda", "model": null, "serial": null, "size": "30G", "rota": "0", "type": "disk",
+         "children": [
+            {"mountpoint": "/", "name": "xvda1", "kname": "xvda1", "model": null, "serial": null, "size": "30G", "rota": "0", "type": "part"}
+         ]
+      },
+      {"mountpoint": null, "name": "xvdc", "kname": "xvdc", "model": null, "serial": null, "size": "50G", "rota": "0", "type": "disk"}
+   ]
+}
+

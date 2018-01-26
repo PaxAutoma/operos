@@ -1,0 +1,1350 @@
+{
+        "system": {
+            "id": "homelaptop",
+            "class": "system",
+            "handle": "",
+            "product": "",
+            "description": "Computer",
+            "vendor": "",
+            "version": "",
+            "serial": "",
+            "slot": "",
+            "size": {
+                "units": "",
+                "value": ""
+            },
+            "capacity": {
+                "units": "",
+                "value": ""
+            },
+            "capabilities": {
+                "capability": [
+                    {
+                        "id": "vsyscall32",
+                        "description": ""
+                    }
+                ]
+            },
+            "configuration": {
+                "setting": null
+            },
+            "Nodes": [
+                {
+                    "id": "core",
+                    "class": "bus",
+                    "handle": "",
+                    "product": "",
+                    "description": "Motherboard",
+                    "vendor": "",
+                    "version": "",
+                    "serial": "",
+                    "slot": "",
+                    "size": {
+                        "units": "",
+                        "value": ""
+                    },
+                    "capacity": {
+                        "units": "",
+                        "value": ""
+                    },
+                    "capabilities": {
+                        "capability": null
+                    },
+                    "configuration": {
+                        "setting": null
+                    },
+                    "Nodes": [
+                        {
+                            "id": "memory",
+                            "class": "memory",
+                            "handle": "",
+                            "product": "",
+                            "description": "System memory",
+                            "vendor": "",
+                            "version": "",
+                            "serial": "",
+                            "slot": "",
+                            "size": {
+                                "units": "bytes",
+                                "value": "16513298432"
+                            },
+                            "capacity": {
+                                "units": "",
+                                "value": ""
+                            },
+                            "capabilities": {
+                                "capability": null
+                            },
+                            "configuration": {
+                                "setting": null
+                            }
+                        },
+                        {
+                            "id": "cpu",
+                            "class": "processor",
+                            "handle": "",
+                            "product": "Intel(R) Core(TM) i7-3520M CPU @ 2.90GHz",
+                            "description": "",
+                            "vendor": "Intel Corp.",
+                            "version": "",
+                            "serial": "",
+                            "slot": "",
+                            "size": {
+                                "units": "Hz",
+                                "value": "3199968000"
+                            },
+                            "capacity": {
+                                "units": "Hz",
+                                "value": "3600000000"
+                            },
+                            "capabilities": {
+                                "capability": [
+                                    {
+                                        "id": "fpu",
+                                        "description": ""
+                                    },
+                                    {
+                                        "id": "fpu_exception",
+                                        "description": ""
+                                    },
+                                    {
+                                        "id": "wp",
+                                        "description": ""
+                                    },
+                                    {
+                                        "id": "vme",
+                                        "description": ""
+                                    },
+                                    {
+                                        "id": "de",
+                                        "description": ""
+                                    },
+                                    {
+                                        "id": "pse",
+                                        "description": ""
+                                    },
+                                    {
+                                        "id": "tsc",
+                                        "description": ""
+                                    },
+                                    {
+                                        "id": "msr",
+                                        "description": ""
+                                    },
+                                    {
+                                        "id": "pae",
+                                        "description": ""
+                                    },
+                                    {
+                                        "id": "mce",
+                                        "description": ""
+                                    },
+                                    {
+                                        "id": "cx8",
+                                        "description": ""
+                                    },
+                                    {
+                                        "id": "apic",
+                                        "description": ""
+                                    },
+                                    {
+                                        "id": "sep",
+                                        "description": ""
+                                    },
+                                    {
+                                        "id": "mtrr",
+                                        "description": ""
+                                    },
+                                    {
+                                        "id": "pge",
+                                        "description": ""
+                                    },
+                                    {
+                                        "id": "mca",
+                                        "description": ""
+                                    },
+                                    {
+                                        "id": "cmov",
+                                        "description": ""
+                                    },
+                                    {
+                                        "id": "pat",
+                                        "description": ""
+                                    },
+                                    {
+                                        "id": "pse36",
+                                        "description": ""
+                                    },
+                                    {
+                                        "id": "clflush",
+                                        "description": ""
+                                    },
+                                    {
+                                        "id": "dts",
+                                        "description": ""
+                                    },
+                                    {
+                                        "id": "acpi",
+                                        "description": ""
+                                    },
+                                    {
+                                        "id": "mmx",
+                                        "description": ""
+                                    },
+                                    {
+                                        "id": "fxsr",
+                                        "description": ""
+                                    },
+                                    {
+                                        "id": "sse",
+                                        "description": ""
+                                    },
+                                    {
+                                        "id": "sse2",
+                                        "description": ""
+                                    },
+                                    {
+                                        "id": "ss",
+                                        "description": ""
+                                    },
+                                    {
+                                        "id": "ht",
+                                        "description": ""
+                                    },
+                                    {
+                                        "id": "tm",
+                                        "description": ""
+                                    },
+                                    {
+                                        "id": "pbe",
+                                        "description": ""
+                                    },
+                                    {
+                                        "id": "syscall",
+                                        "description": ""
+                                    },
+                                    {
+                                        "id": "nx",
+                                        "description": ""
+                                    },
+                                    {
+                                        "id": "rdtscp",
+                                        "description": ""
+                                    },
+                                    {
+                                        "id": "x86-64",
+                                        "description": ""
+                                    },
+                                    {
+                                        "id": "constant_tsc",
+                                        "description": ""
+                                    },
+                                    {
+                                        "id": "arch_perfmon",
+                                        "description": ""
+                                    },
+                                    {
+                                        "id": "pebs",
+                                        "description": ""
+                                    },
+                                    {
+                                        "id": "bts",
+                                        "description": ""
+                                    },
+                                    {
+                                        "id": "rep_good",
+                                        "description": ""
+                                    },
+                                    {
+                                        "id": "nopl",
+                                        "description": ""
+                                    },
+                                    {
+                                        "id": "xtopology",
+                                        "description": ""
+                                    },
+                                    {
+                                        "id": "nonstop_tsc",
+                                        "description": ""
+                                    },
+                                    {
+                                        "id": "aperfmperf",
+                                        "description": ""
+                                    },
+                                    {
+                                        "id": "eagerfpu",
+                                        "description": ""
+                                    },
+                                    {
+                                        "id": "pni",
+                                        "description": ""
+                                    },
+                                    {
+                                        "id": "pclmulqdq",
+                                        "description": ""
+                                    },
+                                    {
+                                        "id": "dtes64",
+                                        "description": ""
+                                    },
+                                    {
+                                        "id": "monitor",
+                                        "description": ""
+                                    },
+                                    {
+                                        "id": "ds_cpl",
+                                        "description": ""
+                                    },
+                                    {
+                                        "id": "vmx",
+                                        "description": ""
+                                    },
+                                    {
+                                        "id": "smx",
+                                        "description": ""
+                                    },
+                                    {
+                                        "id": "est",
+                                        "description": ""
+                                    },
+                                    {
+                                        "id": "tm2",
+                                        "description": ""
+                                    },
+                                    {
+                                        "id": "ssse3",
+                                        "description": ""
+                                    },
+                                    {
+                                        "id": "cx16",
+                                        "description": ""
+                                    },
+                                    {
+                                        "id": "xtpr",
+                                        "description": ""
+                                    },
+                                    {
+                                        "id": "pdcm",
+                                        "description": ""
+                                    },
+                                    {
+                                        "id": "pcid",
+                                        "description": ""
+                                    },
+                                    {
+                                        "id": "sse4_1",
+                                        "description": ""
+                                    },
+                                    {
+                                        "id": "sse4_2",
+                                        "description": ""
+                                    },
+                                    {
+                                        "id": "x2apic",
+                                        "description": ""
+                                    },
+                                    {
+                                        "id": "popcnt",
+                                        "description": ""
+                                    },
+                                    {
+                                        "id": "tsc_deadline_timer",
+                                        "description": ""
+                                    },
+                                    {
+                                        "id": "aes",
+                                        "description": ""
+                                    },
+                                    {
+                                        "id": "xsave",
+                                        "description": ""
+                                    },
+                                    {
+                                        "id": "avx",
+                                        "description": ""
+                                    },
+                                    {
+                                        "id": "f16c",
+                                        "description": ""
+                                    },
+                                    {
+                                        "id": "rdrand",
+                                        "description": ""
+                                    },
+                                    {
+                                        "id": "lahf_lm",
+                                        "description": ""
+                                    },
+                                    {
+                                        "id": "epb",
+                                        "description": ""
+                                    },
+                                    {
+                                        "id": "tpr_shadow",
+                                        "description": ""
+                                    },
+                                    {
+                                        "id": "vnmi",
+                                        "description": ""
+                                    },
+                                    {
+                                        "id": "flexpriority",
+                                        "description": ""
+                                    },
+                                    {
+                                        "id": "ept",
+                                        "description": ""
+                                    },
+                                    {
+                                        "id": "vpid",
+                                        "description": ""
+                                    },
+                                    {
+                                        "id": "fsgsbase",
+                                        "description": ""
+                                    },
+                                    {
+                                        "id": "smep",
+                                        "description": ""
+                                    },
+                                    {
+                                        "id": "erms",
+                                        "description": ""
+                                    },
+                                    {
+                                        "id": "xsaveopt",
+                                        "description": ""
+                                    },
+                                    {
+                                        "id": "dtherm",
+                                        "description": ""
+                                    },
+                                    {
+                                        "id": "ida",
+                                        "description": ""
+                                    },
+                                    {
+                                        "id": "arat",
+                                        "description": ""
+                                    },
+                                    {
+                                        "id": "pln",
+                                        "description": ""
+                                    },
+                                    {
+                                        "id": "pts",
+                                        "description": ""
+                                    },
+                                    {
+                                        "id": "cpufreq",
+                                        "description": ""
+                                    }
+                                ]
+                            },
+                            "configuration": {
+                                "setting": null
+                            }
+                        },
+                        {
+                            "id": "pci",
+                            "class": "bridge",
+                            "handle": "PCIBUS:0000:00",
+                            "product": "3rd Gen Core processor DRAM Controller",
+                            "description": "Host bridge",
+                            "vendor": "Intel Corporation",
+                            "version": "09",
+                            "serial": "",
+                            "slot": "",
+                            "size": {
+                                "units": "",
+                                "value": ""
+                            },
+                            "capacity": {
+                                "units": "",
+                                "value": ""
+                            },
+                            "capabilities": {
+                                "capability": null
+                            },
+                            "configuration": {
+                                "setting": [
+                                    {
+                                        "id": "driver",
+                                        "value": ""
+                                    }
+                                ]
+                            },
+                            "Nodes": [
+                                {
+                                    "id": "display",
+                                    "class": "display",
+                                    "handle": "PCI:0000:00:02.0",
+                                    "product": "3rd Gen Core processor Graphics Controller",
+                                    "description": "VGA compatible controller",
+                                    "vendor": "Intel Corporation",
+                                    "version": "09",
+                                    "serial": "",
+                                    "slot": "",
+                                    "size": {
+                                        "units": "",
+                                        "value": ""
+                                    },
+                                    "capacity": {
+                                        "units": "",
+                                        "value": ""
+                                    },
+                                    "capabilities": {
+                                        "capability": [
+                                            {
+                                                "id": "vga_controller",
+                                                "description": ""
+                                            },
+                                            {
+                                                "id": "bus_master",
+                                                "description": ""
+                                            },
+                                            {
+                                                "id": "cap_list",
+                                                "description": ""
+                                            },
+                                            {
+                                                "id": "rom",
+                                                "description": ""
+                                            }
+                                        ]
+                                    },
+                                    "configuration": {
+                                        "setting": [
+                                            {
+                                                "id": "driver",
+                                                "value": ""
+                                            },
+                                            {
+                                                "id": "latency",
+                                                "value": ""
+                                            }
+                                        ]
+                                    }
+                                },
+                                {
+                                    "id": "usb:0",
+                                    "class": "bus",
+                                    "handle": "PCI:0000:00:14.0",
+                                    "product": "7 Series/C210 Series Chipset Family USB xHCI Host Controller",
+                                    "description": "USB controller",
+                                    "vendor": "Intel Corporation",
+                                    "version": "04",
+                                    "serial": "",
+                                    "slot": "",
+                                    "size": {
+                                        "units": "",
+                                        "value": ""
+                                    },
+                                    "capacity": {
+                                        "units": "",
+                                        "value": ""
+                                    },
+                                    "capabilities": {
+                                        "capability": [
+                                            {
+                                                "id": "xhci",
+                                                "description": ""
+                                            },
+                                            {
+                                                "id": "bus_master",
+                                                "description": ""
+                                            },
+                                            {
+                                                "id": "cap_list",
+                                                "description": ""
+                                            }
+                                        ]
+                                    },
+                                    "configuration": {
+                                        "setting": [
+                                            {
+                                                "id": "driver",
+                                                "value": ""
+                                            },
+                                            {
+                                                "id": "latency",
+                                                "value": ""
+                                            }
+                                        ]
+                                    }
+                                },
+                                {
+                                    "id": "communication:0",
+                                    "class": "communication",
+                                    "handle": "PCI:0000:00:16.0",
+                                    "product": "7 Series/C210 Series Chipset Family MEI Controller #1",
+                                    "description": "Communication controller",
+                                    "vendor": "Intel Corporation",
+                                    "version": "04",
+                                    "serial": "",
+                                    "slot": "",
+                                    "size": {
+                                        "units": "",
+                                        "value": ""
+                                    },
+                                    "capacity": {
+                                        "units": "",
+                                        "value": ""
+                                    },
+                                    "capabilities": {
+                                        "capability": [
+                                            {
+                                                "id": "bus_master",
+                                                "description": ""
+                                            },
+                                            {
+                                                "id": "cap_list",
+                                                "description": ""
+                                            }
+                                        ]
+                                    },
+                                    "configuration": {
+                                        "setting": [
+                                            {
+                                                "id": "driver",
+                                                "value": ""
+                                            },
+                                            {
+                                                "id": "latency",
+                                                "value": ""
+                                            }
+                                        ]
+                                    }
+                                },
+                                {
+                                    "id": "communication:1",
+                                    "class": "communication",
+                                    "handle": "PCI:0000:00:16.3",
+                                    "product": "7 Series/C210 Series Chipset Family KT Controller",
+                                    "description": "Serial controller",
+                                    "vendor": "Intel Corporation",
+                                    "version": "04",
+                                    "serial": "",
+                                    "slot": "",
+                                    "size": {
+                                        "units": "",
+                                        "value": ""
+                                    },
+                                    "capacity": {
+                                        "units": "",
+                                        "value": ""
+                                    },
+                                    "capabilities": {
+                                        "capability": [
+                                            {
+                                                "id": "16550",
+                                                "description": ""
+                                            },
+                                            {
+                                                "id": "bus_master",
+                                                "description": ""
+                                            },
+                                            {
+                                                "id": "cap_list",
+                                                "description": ""
+                                            }
+                                        ]
+                                    },
+                                    "configuration": {
+                                        "setting": [
+                                            {
+                                                "id": "driver",
+                                                "value": ""
+                                            },
+                                            {
+                                                "id": "latency",
+                                                "value": ""
+                                            }
+                                        ]
+                                    }
+                                },
+                                {
+                                    "id": "network",
+                                    "class": "network",
+                                    "handle": "PCI:0000:00:19.0",
+                                    "product": "82579LM Gigabit Network Connection",
+                                    "description": "Ethernet interface",
+                                    "vendor": "Intel Corporation",
+                                    "version": "04",
+                                    "serial": "eb:61:97:3c:a2:0e",
+                                    "slot": "",
+                                    "size": {
+                                        "units": "",
+                                        "value": ""
+                                    },
+                                    "capacity": {
+                                        "units": "",
+                                        "value": "1000000000"
+                                    },
+                                    "capabilities": {
+                                        "capability": [
+                                            {
+                                                "id": "bus_master",
+                                                "description": ""
+                                            },
+                                            {
+                                                "id": "cap_list",
+                                                "description": ""
+                                            },
+                                            {
+                                                "id": "ethernet",
+                                                "description": ""
+                                            },
+                                            {
+                                                "id": "physical",
+                                                "description": ""
+                                            },
+                                            {
+                                                "id": "tp",
+                                                "description": ""
+                                            },
+                                            {
+                                                "id": "10bt",
+                                                "description": ""
+                                            },
+                                            {
+                                                "id": "10bt-fd",
+                                                "description": ""
+                                            },
+                                            {
+                                                "id": "100bt",
+                                                "description": ""
+                                            },
+                                            {
+                                                "id": "100bt-fd",
+                                                "description": ""
+                                            },
+                                            {
+                                                "id": "1000bt-fd",
+                                                "description": ""
+                                            },
+                                            {
+                                                "id": "autonegotiation",
+                                                "description": ""
+                                            }
+                                        ]
+                                    },
+                                    "configuration": {
+                                        "setting": [
+                                            {
+                                                "id": "autonegotiation",
+                                                "value": ""
+                                            },
+                                            {
+                                                "id": "broadcast",
+                                                "value": ""
+                                            },
+                                            {
+                                                "id": "driver",
+                                                "value": ""
+                                            },
+                                            {
+                                                "id": "driverversion",
+                                                "value": ""
+                                            },
+                                            {
+                                                "id": "firmware",
+                                                "value": ""
+                                            },
+                                            {
+                                                "id": "latency",
+                                                "value": ""
+                                            },
+                                            {
+                                                "id": "link",
+                                                "value": ""
+                                            },
+                                            {
+                                                "id": "multicast",
+                                                "value": ""
+                                            },
+                                            {
+                                                "id": "port",
+                                                "value": ""
+                                            }
+                                        ]
+                                    }
+                                },
+                                {
+                                    "id": "usb:1",
+                                    "class": "bus",
+                                    "handle": "PCI:0000:00:1a.0",
+                                    "product": "7 Series/C210 Series Chipset Family USB Enhanced Host Controller #2",
+                                    "description": "USB controller",
+                                    "vendor": "Intel Corporation",
+                                    "version": "04",
+                                    "serial": "",
+                                    "slot": "",
+                                    "size": {
+                                        "units": "",
+                                        "value": ""
+                                    },
+                                    "capacity": {
+                                        "units": "",
+                                        "value": ""
+                                    },
+                                    "capabilities": {
+                                        "capability": [
+                                            {
+                                                "id": "ehci",
+                                                "description": ""
+                                            },
+                                            {
+                                                "id": "bus_master",
+                                                "description": ""
+                                            },
+                                            {
+                                                "id": "cap_list",
+                                                "description": ""
+                                            }
+                                        ]
+                                    },
+                                    "configuration": {
+                                        "setting": [
+                                            {
+                                                "id": "driver",
+                                                "value": ""
+                                            },
+                                            {
+                                                "id": "latency",
+                                                "value": ""
+                                            }
+                                        ]
+                                    }
+                                },
+                                {
+                                    "id": "multimedia",
+                                    "class": "multimedia",
+                                    "handle": "PCI:0000:00:1b.0",
+                                    "product": "7 Series/C210 Series Chipset Family High Definition Audio Controller",
+                                    "description": "Audio device",
+                                    "vendor": "Intel Corporation",
+                                    "version": "04",
+                                    "serial": "",
+                                    "slot": "",
+                                    "size": {
+                                        "units": "",
+                                        "value": ""
+                                    },
+                                    "capacity": {
+                                        "units": "",
+                                        "value": ""
+                                    },
+                                    "capabilities": {
+                                        "capability": [
+                                            {
+                                                "id": "bus_master",
+                                                "description": ""
+                                            },
+                                            {
+                                                "id": "cap_list",
+                                                "description": ""
+                                            }
+                                        ]
+                                    },
+                                    "configuration": {
+                                        "setting": [
+                                            {
+                                                "id": "driver",
+                                                "value": ""
+                                            },
+                                            {
+                                                "id": "latency",
+                                                "value": ""
+                                            }
+                                        ]
+                                    }
+                                },
+                                {
+                                    "id": "pci:0",
+                                    "class": "bridge",
+                                    "handle": "PCIBUS:0000:02",
+                                    "product": "7 Series/C210 Series Chipset Family PCI Express Root Port 1",
+                                    "description": "PCI bridge",
+                                    "vendor": "Intel Corporation",
+                                    "version": "c4",
+                                    "serial": "",
+                                    "slot": "",
+                                    "size": {
+                                        "units": "",
+                                        "value": ""
+                                    },
+                                    "capacity": {
+                                        "units": "",
+                                        "value": ""
+                                    },
+                                    "capabilities": {
+                                        "capability": [
+                                            {
+                                                "id": "pci",
+                                                "description": ""
+                                            },
+                                            {
+                                                "id": "normal_decode",
+                                                "description": ""
+                                            },
+                                            {
+                                                "id": "bus_master",
+                                                "description": ""
+                                            },
+                                            {
+                                                "id": "cap_list",
+                                                "description": ""
+                                            }
+                                        ]
+                                    },
+                                    "configuration": {
+                                        "setting": [
+                                            {
+                                                "id": "driver",
+                                                "value": ""
+                                            }
+                                        ]
+                                    }
+                                },
+                                {
+                                    "id": "pci:1",
+                                    "class": "bridge",
+                                    "handle": "PCIBUS:0000:03",
+                                    "product": "7 Series/C210 Series Chipset Family PCI Express Root Port 2",
+                                    "description": "PCI bridge",
+                                    "vendor": "Intel Corporation",
+                                    "version": "c4",
+                                    "serial": "",
+                                    "slot": "",
+                                    "size": {
+                                        "units": "",
+                                        "value": ""
+                                    },
+                                    "capacity": {
+                                        "units": "",
+                                        "value": ""
+                                    },
+                                    "capabilities": {
+                                        "capability": [
+                                            {
+                                                "id": "pci",
+                                                "description": ""
+                                            },
+                                            {
+                                                "id": "normal_decode",
+                                                "description": ""
+                                            },
+                                            {
+                                                "id": "bus_master",
+                                                "description": ""
+                                            },
+                                            {
+                                                "id": "cap_list",
+                                                "description": ""
+                                            }
+                                        ]
+                                    },
+                                    "configuration": {
+                                        "setting": [
+                                            {
+                                                "id": "driver",
+                                                "value": ""
+                                            }
+                                        ]
+                                    },
+                                    "Nodes": [
+                                        {
+                                            "id": "network",
+                                            "class": "network",
+                                            "handle": "PCI:0000:03:00.0",
+                                            "product": "Centrino Advanced-N 6205 [Taylor Peak]",
+                                            "description": "Wireless interface",
+                                            "vendor": "Intel Corporation",
+                                            "version": "34",
+                                            "serial": "fe:31:3a:84:7c:4b",
+                                            "slot": "",
+                                            "size": {
+                                                "units": "",
+                                                "value": ""
+                                            },
+                                            "capacity": {
+                                                "units": "",
+                                                "value": ""
+                                            },
+                                            "capabilities": {
+                                                "capability": [
+                                                    {
+                                                        "id": "bus_master",
+                                                        "description": ""
+                                                    },
+                                                    {
+                                                        "id": "cap_list",
+                                                        "description": ""
+                                                    },
+                                                    {
+                                                        "id": "ethernet",
+                                                        "description": ""
+                                                    },
+                                                    {
+                                                        "id": "physical",
+                                                        "description": ""
+                                                    },
+                                                    {
+                                                        "id": "wireless",
+                                                        "description": ""
+                                                    }
+                                                ]
+                                            },
+                                            "configuration": {
+                                                "setting": [
+                                                    {
+                                                        "id": "broadcast",
+                                                        "value": ""
+                                                    },
+                                                    {
+                                                        "id": "driver",
+                                                        "value": ""
+                                                    },
+                                                    {
+                                                        "id": "driverversion",
+                                                        "value": ""
+                                                    },
+                                                    {
+                                                        "id": "firmware",
+                                                        "value": ""
+                                                    },
+                                                    {
+                                                        "id": "ip",
+                                                        "value": ""
+                                                    },
+                                                    {
+                                                        "id": "latency",
+                                                        "value": ""
+                                                    },
+                                                    {
+                                                        "id": "link",
+                                                        "value": ""
+                                                    },
+                                                    {
+                                                        "id": "multicast",
+                                                        "value": ""
+                                                    },
+                                                    {
+                                                        "id": "wireless",
+                                                        "value": ""
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                    ]
+                                },
+                                {
+                                    "id": "pci:2",
+                                    "class": "bridge",
+                                    "handle": "PCIBUS:0000:04",
+                                    "product": "7 Series/C210 Series Chipset Family PCI Express Root Port 3",
+                                    "description": "PCI bridge",
+                                    "vendor": "Intel Corporation",
+                                    "version": "c4",
+                                    "serial": "",
+                                    "slot": "",
+                                    "size": {
+                                        "units": "",
+                                        "value": ""
+                                    },
+                                    "capacity": {
+                                        "units": "",
+                                        "value": ""
+                                    },
+                                    "capabilities": {
+                                        "capability": [
+                                            {
+                                                "id": "pci",
+                                                "description": ""
+                                            },
+                                            {
+                                                "id": "normal_decode",
+                                                "description": ""
+                                            },
+                                            {
+                                                "id": "bus_master",
+                                                "description": ""
+                                            },
+                                            {
+                                                "id": "cap_list",
+                                                "description": ""
+                                            }
+                                        ]
+                                    },
+                                    "configuration": {
+                                        "setting": [
+                                            {
+                                                "id": "driver",
+                                                "value": ""
+                                            }
+                                        ]
+                                    },
+                                    "Nodes": [
+                                        {
+                                            "id": "generic",
+                                            "class": "generic",
+                                            "handle": "PCI:0000:04:00.0",
+                                            "product": "MMC/SD Host Controller",
+                                            "description": "System peripheral",
+                                            "vendor": "Ricoh Co Ltd",
+                                            "version": "07",
+                                            "serial": "",
+                                            "slot": "",
+                                            "size": {
+                                                "units": "",
+                                                "value": ""
+                                            },
+                                            "capacity": {
+                                                "units": "",
+                                                "value": ""
+                                            },
+                                            "capabilities": {
+                                                "capability": [
+                                                    {
+                                                        "id": "bus_master",
+                                                        "description": ""
+                                                    },
+                                                    {
+                                                        "id": "cap_list",
+                                                        "description": ""
+                                                    }
+                                                ]
+                                            },
+                                            "configuration": {
+                                                "setting": [
+                                                    {
+                                                        "id": "driver",
+                                                        "value": ""
+                                                    },
+                                                    {
+                                                        "id": "latency",
+                                                        "value": ""
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                    ]
+                                },
+                                {
+                                    "id": "usb:2",
+                                    "class": "bus",
+                                    "handle": "PCI:0000:00:1d.0",
+                                    "product": "7 Series/C210 Series Chipset Family USB Enhanced Host Controller #1",
+                                    "description": "USB controller",
+                                    "vendor": "Intel Corporation",
+                                    "version": "04",
+                                    "serial": "",
+                                    "slot": "",
+                                    "size": {
+                                        "units": "",
+                                        "value": ""
+                                    },
+                                    "capacity": {
+                                        "units": "",
+                                        "value": ""
+                                    },
+                                    "capabilities": {
+                                        "capability": [
+                                            {
+                                                "id": "ehci",
+                                                "description": ""
+                                            },
+                                            {
+                                                "id": "bus_master",
+                                                "description": ""
+                                            },
+                                            {
+                                                "id": "cap_list",
+                                                "description": ""
+                                            }
+                                        ]
+                                    },
+                                    "configuration": {
+                                        "setting": [
+                                            {
+                                                "id": "driver",
+                                                "value": ""
+                                            },
+                                            {
+                                                "id": "latency",
+                                                "value": ""
+                                            }
+                                        ]
+                                    }
+                                },
+                                {
+                                    "id": "isa",
+                                    "class": "bridge",
+                                    "handle": "PCI:0000:00:1f.0",
+                                    "product": "QM77 Express Chipset LPC Controller",
+                                    "description": "ISA bridge",
+                                    "vendor": "Intel Corporation",
+                                    "version": "04",
+                                    "serial": "",
+                                    "slot": "",
+                                    "size": {
+                                        "units": "",
+                                        "value": ""
+                                    },
+                                    "capacity": {
+                                        "units": "",
+                                        "value": ""
+                                    },
+                                    "capabilities": {
+                                        "capability": [
+                                            {
+                                                "id": "isa",
+                                                "description": ""
+                                            },
+                                            {
+                                                "id": "bus_master",
+                                                "description": ""
+                                            },
+                                            {
+                                                "id": "cap_list",
+                                                "description": ""
+                                            }
+                                        ]
+                                    },
+                                    "configuration": {
+                                        "setting": [
+                                            {
+                                                "id": "driver",
+                                                "value": ""
+                                            },
+                                            {
+                                                "id": "latency",
+                                                "value": ""
+                                            }
+                                        ]
+                                    }
+                                },
+                                {
+                                    "id": "storage",
+                                    "class": "storage",
+                                    "handle": "PCI:0000:00:1f.2",
+                                    "product": "7 Series Chipset Family 6-port SATA Controller [AHCI mode]",
+                                    "description": "SATA controller",
+                                    "vendor": "Intel Corporation",
+                                    "version": "04",
+                                    "serial": "",
+                                    "slot": "",
+                                    "size": {
+                                        "units": "",
+                                        "value": ""
+                                    },
+                                    "capacity": {
+                                        "units": "",
+                                        "value": ""
+                                    },
+                                    "capabilities": {
+                                        "capability": [
+                                            {
+                                                "id": "storage",
+                                                "description": ""
+                                            },
+                                            {
+                                                "id": "ahci_1.0",
+                                                "description": ""
+                                            },
+                                            {
+                                                "id": "bus_master",
+                                                "description": ""
+                                            },
+                                            {
+                                                "id": "cap_list",
+                                                "description": ""
+                                            }
+                                        ]
+                                    },
+                                    "configuration": {
+                                        "setting": [
+                                            {
+                                                "id": "driver",
+                                                "value": ""
+                                            },
+                                            {
+                                                "id": "latency",
+                                                "value": ""
+                                            }
+                                        ]
+                                    }
+                                },
+                                {
+                                    "id": "serial",
+                                    "class": "bus",
+                                    "handle": "PCI:0000:00:1f.3",
+                                    "product": "7 Series/C210 Series Chipset Family SMBus Controller",
+                                    "description": "SMBus",
+                                    "vendor": "Intel Corporation",
+                                    "version": "04",
+                                    "serial": "",
+                                    "slot": "",
+                                    "size": {
+                                        "units": "",
+                                        "value": ""
+                                    },
+                                    "capacity": {
+                                        "units": "",
+                                        "value": ""
+                                    },
+                                    "capabilities": {
+                                        "capability": null
+                                    },
+                                    "configuration": {
+                                        "setting": [
+                                            {
+                                                "id": "latency",
+                                                "value": ""
+                                            }
+                                        ]
+                                    }
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": "scsi",
+                    "class": "storage",
+                    "handle": "SCSI:06",
+                    "product": "",
+                    "description": "",
+                    "vendor": "",
+                    "version": "",
+                    "serial": "",
+                    "slot": "",
+                    "size": {
+                        "units": "",
+                        "value": ""
+                    },
+                    "capacity": {
+                        "units": "",
+                        "value": ""
+                    },
+                    "capabilities": {
+                        "capability": [
+                            {
+                                "id": "scsi-host",
+                                "description": ""
+                            }
+                        ]
+                    },
+                    "configuration": {
+                        "setting": [
+                            {
+                                "id": "driver",
+                                "value": ""
+                            }
+                        ]
+                    }
+                }
+            ]
+        }
+    }

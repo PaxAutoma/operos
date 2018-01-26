@@ -1,0 +1,3 @@
+build/*
+vendor/
+*.pb.go

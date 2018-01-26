@@ -1,0 +1,36 @@
+kind: Deployment
+apiVersion: apps/v1beta2
+metadata:
+  name: rbd-provisioner
+  namespace: operos
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: rbd-provisioner
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: rbd-provisioner
+    spec:
+      tolerations:
+        - key: node-role.kubernetes.io/master
+          operator: "Exists"
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                - key: node-role.kubernetes.io/master
+                  operator: In
+                  values:
+                    - "true"
+      containers:
+        - name: rbd-provisioner
+          image: "quay.io/external_storage/rbd-provisioner:latest"
+          imagePullPolicy: Never
+          env:
+            - name: PROVISIONER_NAME
+              value: ceph.com/rbd

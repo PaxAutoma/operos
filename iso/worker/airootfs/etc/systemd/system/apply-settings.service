@@ -1,0 +1,22 @@
+[Unit]
+Description=Apply worker settings
+After=network-online.target network.target
+Before=docker.service
+Before=kubelet.service
+Before=kube-proxy.service
+Before=make-partitions.service
+Before=var-lib-docker.mount
+Before=var-lib-kubelet.mount
+
+[Service]
+Type=oneshot
+RemainAfterExit=true
+ExecStart=/etc/systemd/scripts/apply-settings.sh
+
+[Install]
+WantedBy=multi-user.target
+RequiredBy=kubelet.service
+RequiredBy=kube-proxy.service
+RequiredBy=make-partitions.service
+RequiredBy=var-lib-docker.mount
+RequiredBy=var-lib-kubelet.mount

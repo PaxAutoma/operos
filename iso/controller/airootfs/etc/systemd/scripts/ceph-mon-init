@@ -1,0 +1,86 @@
+#!/bin/bash -xe
+# Copyright 2018 Pax Automa Systems, Inc.
+# 
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+# 
+#    http://www.apache.org/licenses/LICENSE-2.0
+# 
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+. /etc/paxautoma/settings
+
+if [ ! -s /etc/ceph/ceph.conf ] ; then
+
+mkdir -p /etc/ceph
+
+CEPH_FSID=`uuidgen`
+CHOSTNAME=`hostname -s`
+
+cat > /etc/ceph/ceph.conf <<EOF
+[global]
+fsid = ${CEPH_FSID}
+mon initial members = ${CHOSTNAME}
+mon host = ${OPEROS_CONTROLLER_IP}
+public network = ${OPEROS_CONTROLLER_IP}${OPEROS_NODE_MASK}
+cluster network = ${OPEROS_CONTROLLER_IP}${OPEROS_NODE_MASK}
+auth cluster required = cephx
+auth service required = cephx
+auth client required = cephx
+osd journal size = 1024
+osd pool default size = 2  # Write an object n times.
+osd pool default min size = 1
+osd pool default pg num = 128
+osd pool default pgp num = 128
+osd crush chooseleaf type = 1
+EOF
+
+ceph-authtool --create-keyring /etc/ceph/ceph.mon.keyring --gen-key -n mon. --cap mon 'allow *'
+ceph-authtool --create-keyring /etc/ceph/ceph.client.admin.keyring --gen-key -n client.admin --set-uid=0 --cap mon 'allow *' --cap osd 'allow *' --cap mds 'allow *' --cap mgr 'allow *'
+
+ceph-authtool /etc/ceph/ceph.mon.keyring --import-keyring /etc/ceph/ceph.client.admin.keyring
+
+monmaptool --create --add ${CHOSTNAME} ${OPEROS_CONTROLLER_IP} --fsid ${CEPH_FSID} /etc/ceph/monmap
+
+mkdir -p /var/lib/ceph/{mgr,mon}/ceph-$CHOSTNAME
+chown ceph  /var/lib/ceph/mon/ceph-$CHOSTNAME
+chown ceph /etc/ceph/monmap
+chown ceph /etc/ceph/ceph.mon.keyring
+
+su -s /bin/bash -c "/usr/bin/ceph-mon --cluster ceph --mkfs -i ${CHOSTNAME} --monmap /etc/ceph/monmap --keyring /etc/ceph/ceph.mon.keyring" ceph
+
+export ETCDCTL_API=3
+
+touch /var/lib/ceph/mon/ceph-${CHOSTNAME}/done
+
+
+systemctl enable ceph.target ceph-mon.target
+systemctl enable ceph-mon@${CHOSTNAME}.service
+systemctl start ceph-mon@${CHOSTNAME}.service
+
+/usr/bin/ceph auth get-or-create mgr.${CHOSTNAME} mon 'allow profile mgr' osd 'allow *' mds 'allow *' > /var/lib/ceph/mgr/ceph-${CHOSTNAME}/keyring
+systemctl enable ceph-mgr@${CHOSTNAME}.service
+systemctl start ceph-mgr@${CHOSTNAME}.service
+
+/usr/bin/ceph --cluster ceph auth get-or-create client.kube mon 'allow r, allow command "osdblacklist"' osd 'allow rwx pool=kube'
+
+sleep 3
+
+etcd_cmd () {
+	        /usr/bin/etcdctl --endpoints=http://127.0.0.1:4279  "$@"
+}
+
+
+cat /var/lib/ceph/mon/ceph-controller/keyring | etcd_cmd put "cluster/$OPEROS_INSTALL_ID/secret-ceph-mon-keyring"
+cat /etc/ceph/ceph.client.admin.keyring | etcd_cmd put "cluster/$OPEROS_INSTALL_ID/secret-ceph-client-admin-keyring"
+cat /etc/ceph/ceph.conf | etcd_cmd put "cluster/$OPEROS_INSTALL_ID/ceph-config"
+/usr/bin/ceph auth get client.kube | etcd_cmd put "cluster/$OPEROS_INSTALL_ID/secret-ceph-kube-keyring"
+
+systemctl disable operos-ceph-mon-init.service
+
+fi

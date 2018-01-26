@@ -1,0 +1,13 @@
+[Unit]
+Description=Post-installation setup
+Requires=docker.service
+After=docker.service
+Before=kubelet.service
+
+[Service]
+Type=oneshot
+ExecStart=/etc/systemd/scripts/load-images
+RemainAfterExit=yes
+
+[Install]
+WantedBy=multi-user.target

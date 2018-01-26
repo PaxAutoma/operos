@@ -1,0 +1,20 @@
+[Unit]
+Description=Operos Node Management Daemon
+Requires=operos-cfg-store.service
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+TimeoutStartSec=0
+Restart=always
+EnvironmentFile=/etc/paxautoma/settings
+ExecStart=/usr/bin/teamster \
+    -listen-addr ${OPEROS_CONTROLLER_IP}:2680 \
+    -listen-grpc ${OPEROS_CONTROLLER_IP}:2681 \
+    -install-id ${OPEROS_INSTALL_ID} \
+    -etcd-cluster 127.0.0.1:4279 \
+    -shadow-file /etc/shadow
+KillMode=none
+
+[Install]
+WantedBy=multi-user.target

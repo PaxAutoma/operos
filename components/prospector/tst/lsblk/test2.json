@@ -1,0 +1,41 @@
+{
+   "blockdevices": [
+      {"name": "loop0", "kname": "loop0", "model": null, "serial": null, "size": "100G", "rota": "1", "type": "loop",
+         "children": [
+            {"name": "docker-254:2-2752656-pool", "kname": "dm-3", "model": null, "serial": null, "size": "100G", "rota": "1", "type": "dm",
+               "children": [
+                  {"name": "docker-254:2-2752656-eed4c0fc38be9e517fd0b7fb49ddc0a85f93794af4f553bef86b98836b2baa75", "kname": "dm-4", "model": null, "serial": null, "size": "10G", "rota": "1", "type": "dm"},
+                  {"name": "docker-254:2-2752656-e8b0b37b05efe23bc6e9d74f55fc2111c8eef54b58aec4c024bdb3ef91b24a88", "kname": "dm-5", "model": null, "serial": null, "size": "10G", "rota": "1", "type": "dm"},
+                  {"name": "docker-254:2-2752656-4ccb7a2b7c0a333daad48add2064899a2883a44210ed4946dcf77407db1c20c6", "kname": "dm-6", "model": null, "serial": null, "size": "10G", "rota": "1", "type": "dm"}
+               ]
+            }
+         ]
+      },
+      {"name": "loop1", "kname": "loop1", "model": null, "serial": null, "size": "2G", "rota": "1", "type": "loop",
+         "children": [
+            {"name": "docker-254:2-2752656-pool", "kname": "dm-3", "model": null, "serial": null, "size": "100G", "rota": "1", "type": "dm",
+               "children": [
+                  {"name": "docker-254:2-2752656-eed4c0fc38be9e517fd0b7fb49ddc0a85f93794af4f553bef86b98836b2baa75", "kname": "dm-4", "model": null, "serial": null, "size": "10G", "rota": "1", "type": "dm"},
+                  {"name": "docker-254:2-2752656-e8b0b37b05efe23bc6e9d74f55fc2111c8eef54b58aec4c024bdb3ef91b24a88", "kname": "dm-5", "model": null, "serial": null, "size": "10G", "rota": "1", "type": "dm"},
+                  {"name": "docker-254:2-2752656-4ccb7a2b7c0a333daad48add2064899a2883a44210ed4946dcf77407db1c20c6", "kname": "dm-6", "model": null, "serial": null, "size": "10G", "rota": "1", "type": "dm"}
+               ]
+            }
+         ]
+      },
+      {"name": "nvme0n1", "kname": "nvme0n1", "model": "Samsung SSD 950 PRO 512GB               ", "serial": "S2GMNSDFSDSDCAHV", "size": "477G", "rota": "0", "type": "disk",
+         "children": [
+            {"name": "nvme0n1p1", "kname": "nvme0n1p1", "model": null, "serial": null, "size": "200M", "rota": "0", "type": "part"},
+            {"name": "nvme0n1p2", "kname": "nvme0n1p2", "model": null, "serial": null, "size": "476.8G", "rota": "0", "type": "part",
+               "children": [
+                  {"name": "lvm", "kname": "dm-0", "model": null, "serial": null, "size": "476.8G", "rota": "0", "type": "crypt",
+                     "children": [
+                        {"name": "cvg0-lv_swap", "kname": "dm-1", "model": null, "serial": null, "size": "64G", "rota": "0", "type": "lvm"},
+                        {"name": "cvg0-lv_root", "kname": "dm-2", "model": null, "serial": null, "size": "412.8G", "rota": "0", "type": "lvm"}
+                     ]
+                  }
+               ]
+            }
+         ]
+      }
+   ]
+}

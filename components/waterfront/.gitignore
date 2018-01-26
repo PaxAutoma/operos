@@ -1,0 +1,4 @@
+client/node_modules/
+server/vendor/
+dist/
+*.pb.go
