@@ -25,9 +25,13 @@ For more information about Operos, see [its home page](https://www.paxautoma.com
 
 ## Get Operos
 
+The easiest way to get started with Operos is to download a binary ISO image:
+
 [Download the latest ISO binary here](https://www.paxautoma.com/download/operos-iso).
 
-To use:
+Read [the installation instructions](https://www.paxautoma.com/operos/docs/0.2.0.html).
+
+## Building from source
 
 1. Run `make` to build everything from scratch. See below for how to rebuild
    various parts of the system.
