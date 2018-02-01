@@ -16,7 +16,7 @@ ExecStart=/usr/bin/docker run \
     --name operos-image-server \
     -v /etc/paxautoma/iso:/usr/share/nginx/html \
     -v /boot:/usr/share/nginx/html/boot \
-    -v /run/archiso/bootmnt/operos:/usr/share/nginx/html/operos \
+    -v /run/archiso/bootmnt/operos-${OPEROS_VERSION}:/usr/share/nginx/html/operos \
     -v /opt/docker-images:/usr/share/nginx/html/images \
     nginx:${OPEROS_NGINX_VERSION}
 ExecStop=/usr/bin/docker stop operos-image-server

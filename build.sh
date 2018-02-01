@@ -108,7 +108,8 @@ make_syslinux() {
         sed "s|%ARCHISO_LABEL%|${iso_label}|g;
              s|%INSTALL_DIR%|${install_dir}|g;
              s|%ARCHISO_LAYER%|${layer}|g;
-             s|%ARCHISO_LAYERS%|${archiso_layers}|g;" \
+             s|%ARCHISO_LAYERS%|${archiso_layers}|g;
+             s|%OPEROS_VERSION%|${iso_version}|g;" \
              ${_cfg} > ${work_dir}/${layer}/iso/${install_dir}/boot/syslinux-${layer}/${_cfg##*/}
     done
     cp ${script_path}/iso/${layer}/syslinux/splash.png ${work_dir}/${layer}/iso/${install_dir}/boot/syslinux-${layer}/
@@ -148,7 +149,8 @@ make_efi() {
     sed "s|%ARCHISO_LABEL%|${iso_label}|g;
          s|%INSTALL_DIR%|${install_dir}|g
          s|%ARCHISO_LAYER%|${layer}|g;
-         s|%ARCHISO_LAYERS%|${archiso_layers}|g;" \
+         s|%ARCHISO_LAYERS%|${archiso_layers}|g;
+         s|%OPEROS_VERSION%|${iso_version}|g;" \
         ${script_path}/iso/${layer}/efiboot/loader/entries/archiso-x86_64-usb.conf > ${work_dir}/${layer}/iso/loader/entries/archiso-x86_64.conf
 
     # EFI Shell 2.0 for UEFI 2.3+
