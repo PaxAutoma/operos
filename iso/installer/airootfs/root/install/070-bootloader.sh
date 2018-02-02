@@ -29,19 +29,25 @@ EOF
 
     # set up syslinux
     arch-chroot /mnt extlinux --install /boot
-    sed -i "s/%CONTROLLER_DISK%/${CONTROLLER_DISK//\//\\\/}/g" /mnt/boot/syslinux-controller/*.cfg
+    sed -i "s/%CONTROLLER_DISK%/${CONTROLLER_DISK//\//\\\/}/g;
+            s/%OPEROS_VERSION%/${OPEROS_VERSION}/g;" /mnt/boot/syslinux-controller/*.cfg
 }
 
 install_efi() {
-    mkdir -p /mnt/efi/EFI/operos
-    cp /run/archiso/bootmnt/operos/boot/intel_ucode.img /mnt/efi/EFI/operos/intel_ucode.img
-    cp /run/archiso/bootmnt/operos/boot/intel_ucode.LICENSE /mnt/efi/EFI/operos/intel_ucode.LICENSE
-    cp /run/archiso/bootmnt/operos/boot/x86_64/archiso.img /mnt/efi/EFI/operos/archiso.img
-    cp /run/archiso/bootmnt/operos/boot/x86_64/vmlinuz /mnt/efi/EFI/operos/vmlinuz.efi
+    mkdir -p /mnt/efi/EFI/operos-${OPEROS_VERSION}
+    cp /run/archiso/bootmnt/operos/boot/intel_ucode.img /mnt/efi/EFI/operos-${OPEROS_VERSION}/intel_ucode.img
+    cp /run/archiso/bootmnt/operos/boot/intel_ucode.LICENSE /mnt/efi/EFI/operos-${OPEROS_VERSION}/intel_ucode.LICENSE
+    cp /run/archiso/bootmnt/operos/boot/x86_64/archiso.img /mnt/efi/EFI/operos-${OPEROS_VERSION}/archiso.img
+    cp /run/archiso/bootmnt/operos/boot/x86_64/vmlinuz /mnt/efi/EFI/operos-${OPEROS_VERSION}/vmlinuz.efi
 
     # copy loader config
-    cp -r efiboot/loader /mnt/efi/loader
-    find /mnt/efi/loader -name "*.conf" -exec sed -i "s/%CONTROLLER_DISK%/${CONTROLLER_DISK//\//\\\/}/g" {} \;
+    mkdir /mnt/efi/loader /mnt/efi/loader/entries
+    cp efiboot/loader/loader.conf /mnt/efi/loader/loader.conf
+    cp efiboot/loader/entries/operos.conf /mnt/efi/loader/entries/operos-${OPEROS_VERSION}.conf 
+
+    find /mnt/efi/loader -name "*.conf" -exec \
+        sed -i "s/%CONTROLLER_DISK%/${CONTROLLER_DISK//\//\\\/}/g;
+                s/%OPEROS_VERSION%/${OPEROS_VERSION}/g;" {} \;
 
     # install the systemd-boot efi binaries
     bootctl --path=/mnt/efi install
