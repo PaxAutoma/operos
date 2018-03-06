@@ -1,6 +1,7 @@
 [Unit]
 Description=TTY status display
 After=systemd-journald.service
+DefaultDependencies=no
 
 [Service]
 ExecStart=-/sbin/agetty --noclear -o "--boot-if --node-type Worker" -l /usr/bin/statustty -n tty1 $TERM

@@ -1,6 +1,7 @@
 [Unit]
 Description=TTY status display
 After=systemd-journald.service
+DefaultDependencies=no
 
 [Service]
 EnvironmentFile=/etc/paxautoma/settings
