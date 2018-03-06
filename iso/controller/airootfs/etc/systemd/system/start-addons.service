@@ -1,7 +1,7 @@
 [Unit]
 Description=Kubernetes add-ons
 Requires=kubelet.service
-After=kubelet.service
+After=kubelet.service operos-ceph-mon-init.service
 
 [Service]
 Type=oneshot
