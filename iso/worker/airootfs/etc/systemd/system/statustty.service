@@ -1,6 +1,7 @@
 [Unit]
 Description=TTY status display
 After=systemd-journald.service
+DefaultDependencies=no
 
 [Service]
 ExecStart=-/sbin/agetty --noclear -o "--boot-if --node-type Worker" -l /usr/bin/statustty -n tty1 $TERM
@@ -12,7 +13,6 @@ TTYPath=/dev/tty1
 TTYReset=yes
 TTYVHangup=yes
 TTYVTDisallocate=yes
-KillMode=none
 
 # Unset locale for the console getty since the console has problems
 # displaying some internationalized messages.

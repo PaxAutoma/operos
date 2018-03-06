@@ -1,6 +1,7 @@
 [Unit]
 Description=TTY status display
 After=systemd-journald.service
+DefaultDependencies=no
 
 [Service]
 EnvironmentFile=/etc/paxautoma/settings
@@ -13,7 +14,6 @@ TTYPath=/dev/tty1
 TTYReset=yes
 TTYVHangup=yes
 TTYVTDisallocate=yes
-KillMode=none
 
 # Unset locale for the console getty since the console has problems
 # displaying some internationalized messages.

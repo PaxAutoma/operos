@@ -155,46 +155,50 @@ func main() {
 }
 
 func setupGui(g *gocui.Gui, nodeType string) {
-	if *canExit {
-		g.SetKeybinding("", gocui.KeyCtrlC, gocui.ModNone, func(g *gocui.Gui, v *gocui.View) error {
-			return gocui.ErrQuit
-		})
-	}
-
 	g.InputEsc = true
 
-	w, h := g.Size()
+	g.SetManagerFunc(func(gui *gocui.Gui) error {
+		w, h := g.Size()
 
-	if v, err := g.SetView("main", -1, -1, w, 3); err != nil {
-		if err != gocui.ErrUnknownView {
-			log.Fatalf("error setting main view: %v", err)
+		if v, err := g.SetView("main", -1, -1, w, 3); err != nil {
+			if err != gocui.ErrUnknownView {
+				log.Fatalf("error setting main view: %v", err)
+			}
+
+			if *canExit {
+				g.SetKeybinding("", gocui.KeyCtrlC, gocui.ModNone, func(g *gocui.Gui, v *gocui.View) error {
+					return gocui.ErrQuit
+				})
+			}
+
+			g.SetKeybinding("main", gocui.KeyCtrlD, gocui.ModNone, func(g *gocui.Gui, v *gocui.View) error {
+				sendDiagnostics(g)
+				return nil
+			})
+
+			v.BgColor = gocui.ColorWhite
+			v.FgColor = gocui.ColorBlack
+			v.Frame = false
+			fmt.Fprintf(v, "\n\n Pax Automa Operos \033[34;1m%s\033[0m (v%s)\n", nodeType, operosVersion)
+
+			if _, err := g.SetCurrentView("main"); err != nil {
+				log.Fatalf("Cannot activate main view: %s", err.Error())
+			}
 		}
 
-		v.BgColor = gocui.ColorWhite
-		v.FgColor = gocui.ColorBlack
-		v.Frame = false
-		fmt.Fprintf(v, "\n\n Pax Automa Operos \033[34;1m%s\033[0m (v%s)\n", nodeType, operosVersion)
-	}
+		if v, err := g.SetView("footer", -1, h-2, w, h); err != nil {
+			if err != gocui.ErrUnknownView {
+				log.Fatalf("error setting footer view: %v", err)
+			}
 
-	if v, err := g.SetView("footer", -1, h-2, w, h); err != nil {
-		if err != gocui.ErrUnknownView {
-			log.Fatalf("error setting footer view: %v", err)
+			v.BgColor = gocui.ColorWhite
+			v.FgColor = gocui.ColorBlack
+			v.Frame = false
+			fmt.Fprint(v, " <Alt-Right> Log in to system    <Ctrl-D> Send diagnostics")
 		}
 
-		v.BgColor = gocui.ColorWhite
-		v.FgColor = gocui.ColorBlack
-		v.Frame = false
-		fmt.Fprint(v, " <Alt-Right> Log in to system    <Ctrl-D> Send diagnostics")
-	}
-
-	g.SetKeybinding("main", gocui.KeyCtrlD, gocui.ModNone, func(g *gocui.Gui, v *gocui.View) error {
-		sendDiagnostics(g)
 		return nil
 	})
-
-	if _, err := g.SetCurrentView("main"); err != nil {
-		log.Fatalf("Cannot activate main view: %s", err.Error())
-	}
 }
 
 func showProgressBar(g *gocui.Gui, progress float64) {
