@@ -1,7 +1,6 @@
 [Unit]
 Description=Operos Worker Image Server
 Requires=operos-cfg-store.service
-Requires=load-images.service
 After=load-images.service
 
 [Service]
