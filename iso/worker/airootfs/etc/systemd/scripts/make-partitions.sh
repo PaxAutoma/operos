@@ -68,11 +68,15 @@ case $1 in
     for dname in $( lsblk -o KNAME,TYPE,TRAN | grep disk | grep -v usb | cut -d ' ' -f 1) ; do
         disk="/dev/$dname"
         serial=$(lsblk --nodeps -o name,serial | grep ^$dname | awk '{ print $2 }' )
-        if ! check_partitions $disk $serial; then
+        if [[ -z "$serial" ]]; then
+            serial=$dname
+        fi
+
+        if ! check_partitions "$disk" "$serial"; then
             echo "Re-partitioning disk $disk $serial"
 
             set -x
-            repartition $disk $serial $OPEROS_WORKER_STORAGE_PERCENTAGE &>> /root/initialize.log
+            repartition "$disk" "$serial" "$OPEROS_WORKER_STORAGE_PERCENTAGE"
             result=$?
             set +x
 
@@ -129,9 +133,8 @@ case $1 in
     done
 
     if [ $VOLGROUP_NMEMBERS -eq 0 ] ; then
-        echo "No disks to add to system storage found, storage failure. Logs follow ----->"        
-        cat /root/initialize.log
-        exit -1
+        echo "No disks to add to system storage found"
+        exit 1
     fi
 
     #volume group
