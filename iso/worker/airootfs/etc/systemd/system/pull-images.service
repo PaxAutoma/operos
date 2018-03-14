@@ -1,6 +1,6 @@
 [Unit]
 Description=Download container images from controller
-After=docker.service
+After=docker.service apply-settings.service
 Before=kubelet.service
 
 [Service]
