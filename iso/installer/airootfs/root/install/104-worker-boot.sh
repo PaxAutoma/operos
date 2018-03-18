@@ -1,12 +1,12 @@
 #!/bin/bash -xe
 # Copyright 2018 Pax Automa Systems, Inc.
-# 
+#
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
-# 
+#
 #    http://www.apache.org/licenses/LICENSE-2.0
-# 
+#
 # Unless required by applicable law or agreed to in writing, software
 # distributed under the License is distributed on an "AS IS" BASIS,
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -16,31 +16,21 @@
 echo \> Setting up worker boot infrastructure >&3
 
 mkdir -p /mnt/etc/paxautoma/iso
-cp /mnt/boot/syslinux-worker/ldlinux.c32 /mnt/etc/paxautoma/iso/
+cp /mnt/boot/syslinux-worker/lpxelinux.0 /mnt/boot/
+cp /mnt/boot/syslinux-worker/ldlinux.c32 /mnt/boot/
+mkdir -p /mnt/boot/pxelinux.cfg
 
-cat > /mnt/etc/paxautoma/iso/operos.ipxe <<EOF
-#!ipxe
-:retry_dhcp
-dhcp && isset \${next-server} || goto retry_dhcp
-echo Operos worker booting from http://\${next-server}:5080
-set 210:string http://\${next-server}:5080/
-set 209:string worker.cfg
-chain http://\${next-server}:5080/boot/syslinux-worker/lpxelinux.0
-EOF
-
-
-cat > /mnt/etc/paxautoma/iso/worker.cfg <<EOF
-PATH syslinux-worker/
+cat > /mnt/boot/pxelinux.cfg/default <<EOF
+PATH /syslinux-worker/
 DEFAULT loadconfig
 
 LABEL loadconfig
-  CONFIG boot/syslinux-worker/syslinux.cfg
-  APPEND boot/
+  CONFIG /syslinux-worker/syslinux.cfg
 EOF
 
 # tftp
 cat > /mnt/etc/conf.d/tftpd <<EOF
-TFTPD_ARGS="--verbose --address ${OPEROS_CONTROLLER_IP} -m /tftpboot/mapfile -u ftp --secure /tftpboot"
+TFTPD_ARGS="--verbose --address ${OPEROS_CONTROLLER_IP} -m /etc//tftpd.mapfile -u ftp --secure /boot"
 EOF
 
 # dhcp
@@ -123,16 +113,14 @@ CLUSTER_SN_START=$(network $OPEROS_CONTROLLER_IP ${OPEROS_NODE_MASK//\/})
 
 CLUSTER_NODE_END=$(end_ip $CLUSTER_NODE_START ${OPEROS_NODE_MASK//\/})
 
-mkdir -p /mnt/etc/dhcpd
-
 cat > /mnt/etc/dhcpd.conf <<EOF
 ddns-update-style none;
 deny bootp;     #default
 authoritative;
 
-include "/etc/dhcpd/ipxe-option-space.conf";
-
 subnet ${CLUSTER_SN_START} netmask ${CLUSTER_SN_MASK} {
+    allow bootp;
+    allow booting;
     range ${CLUSTER_NODE_START} ${CLUSTER_NODE_END};
     option subnet-mask ${CLUSTER_SN_MASK};
     option routers ${OPEROS_CONTROLLER_IP};
@@ -141,112 +129,11 @@ subnet ${CLUSTER_SN_START} netmask ${CLUSTER_SN_MASK} {
     option domain-search "${OPEROS_DNS_DOMAIN}";
     option domain-name-servers ${OPEROS_CONTROLLER_IP};
 
-    include "/etc/dhcpd/ipxe-bootp.conf";
+    next-server $OPEROS_CONTROLLER_IP;
+    filename "lpxelinux.0";
 }
 
 use-host-decl-names on;
 EOF
-
-cat > /mnt/etc/dhcpd/ipxe-option-space.conf <<EOF
-# Declare the iPXE/gPXE/Etherboot option space
-option space ipxe;
-option ipxe-encap-opts code 175 = encapsulate ipxe;
-
-# iPXE options, can be set in DHCP response packet
-option ipxe.priority         code   1 = signed integer 8;
-option ipxe.keep-san         code   8 = unsigned integer 8;
-option ipxe.skip-san-boot    code   9 = unsigned integer 8;
-option ipxe.syslogs          code  85 = string;
-option ipxe.cert             code  91 = string;
-option ipxe.privkey          code  92 = string;
-option ipxe.crosscert        code  93 = string;
-option ipxe.no-pxedhcp       code 176 = unsigned integer 8;
-option ipxe.bus-id           code 177 = string;
-option ipxe.bios-drive       code 189 = unsigned integer 8;
-option ipxe.username         code 190 = string;
-option ipxe.password         code 191 = string;
-option ipxe.reverse-username code 192 = string;
-option ipxe.reverse-password code 193 = string;
-option ipxe.version          code 235 = string;
-option iscsi-initiator-iqn   code 203 = string;
-
-# iPXE feature flags, set in DHCP request packet
-option ipxe.pxeext    code 16 = unsigned integer 8;
-option ipxe.iscsi     code 17 = unsigned integer 8;
-option ipxe.aoe       code 18 = unsigned integer 8;
-option ipxe.http      code 19 = unsigned integer 8;
-option ipxe.https     code 20 = unsigned integer 8;
-option ipxe.tftp      code 21 = unsigned integer 8;
-option ipxe.ftp       code 22 = unsigned integer 8;
-option ipxe.dns       code 23 = unsigned integer 8;
-option ipxe.bzimage   code 24 = unsigned integer 8;
-option ipxe.multiboot code 25 = unsigned integer 8;
-option ipxe.slam      code 26 = unsigned integer 8;
-option ipxe.srp       code 27 = unsigned integer 8;
-option ipxe.nbi       code 32 = unsigned integer 8;
-option ipxe.pxe       code 33 = unsigned integer 8;
-option ipxe.elf       code 34 = unsigned integer 8;
-option ipxe.comboot   code 35 = unsigned integer 8;
-option ipxe.efi       code 36 = unsigned integer 8;
-option ipxe.fcoe      code 37 = unsigned integer 8;
-option ipxe.vlan      code 38 = unsigned integer 8;
-option ipxe.menu      code 39 = unsigned integer 8;
-option ipxe.sdi       code 40 = unsigned integer 8;
-option ipxe.nfs       code 41 = unsigned integer 8;
-
-# Other useful general options
-# http://www.ietf.org/assignments/dhcpv6-parameters/dhcpv6-parameters.txt
-option arch code 93 = unsigned integer 16;
-EOF
-
-cat > /mnt/etc/dhcpd/ipxe-bootp.conf <<EOF
-allow bootp;
-allow booting;
-next-server ${OPEROS_CONTROLLER_IP};
-
-# Disable ProxyDHCP, we're in control of the primary DHCP server
-#option ipxe.no-pxedhcp 1;
-
-# Make sure the iPXE we're loading supports what we need,
-# if not load a full-featured version
-if    exists ipxe.http
-  and exists ipxe.menu
-  and ( ( exists ipxe.pxe
-      and exists ipxe.bzimage
-      and exists ipxe.elf
-  ) or (
-      exists ipxe.efi
-  ) ) {
-    filename "http://${OPEROS_CONTROLLER_IP}:5080/operos.ipxe";
-}
-elsif exists user-class and option user-class = "iPXE" {
-    if option arch = 00:06 {
-        filename "ipxe-x86.efi";
-    } elsif option arch = 00:07 {
-        filename "ipxe-x64.efi";
-    } elsif option arch = 00:00 {
-        filename "ipxe.pxe";
-    }
-}
-elsif exists user-class and option user-class = "gPXE" {
-    filename "ipxe.pxe";
-}
-elsif option arch = 00:06 {
-    # EFI 32-bit
-    filename "ipxe-x86.efi";
-}
-elsif option arch = 00:07 {
-    # EFI 64-bit
-    filename "ipxe-x64.efi";
-}
-elsif option arch = 00:00 {
-    # Legacy BIOS x86 mode
-    filename "ipxe.pxe";
-}
-else {
-    # Unsupported client architecture type, so do nothing
-}
-EOF
-
 
 arch-chroot /mnt systemctl enable dhcpd4@${CONTROLLER_PRIVATE_IF}.service
