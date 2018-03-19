@@ -15,6 +15,33 @@
 
 . /etc/paxautoma/settings
 
+function wait_for_unit {
+	set +e
+	local attempts=$1
+	shift
+
+	local count=$attempts
+	while [ $count -gt 0 ] ; do
+		systemctl is-active $@ >/dev/null 2>&1
+		if [ $? -eq 0  ] ; then
+			break
+		fi
+		count=$[$count+1]
+		sleep 1
+	done
+
+	set -e
+	if [ $count -eq 0 ] ; then
+		return 1
+	fi
+
+    return 0
+}
+
+etcd_cmd () {
+	        /usr/bin/etcdctl --endpoints=http://127.0.0.1:4279  "$@"
+}
+
 if [ ! -s /etc/ceph/ceph.conf ] ; then
 
 mkdir -p /etc/ceph
@@ -58,28 +85,38 @@ export ETCDCTL_API=3
 
 touch /var/lib/ceph/mon/ceph-${CHOSTNAME}/done
 
-
 systemctl enable ceph.target ceph-mon.target
 systemctl enable ceph-mon@${CHOSTNAME}.service
 systemctl start ceph-mon@${CHOSTNAME}.service
 
-/usr/bin/ceph auth get-or-create mgr.${CHOSTNAME} mon 'allow profile mgr' osd 'allow *' mds 'allow *' > /var/lib/ceph/mgr/ceph-${CHOSTNAME}/keyring
-systemctl enable ceph-mgr@${CHOSTNAME}.service
-systemctl start ceph-mgr@${CHOSTNAME}.service
+
+wait_for_unit 5 ceph-mon@${CHOSTNAME}
+if [ $? -ne 0 ] ; then
+	echo "FALTAL: Ceph mon did not become available after 5 seconds"
+	exit 1
+fi
 
 /usr/bin/ceph --cluster ceph auth get-or-create client.kube mon 'allow r, allow command "osdblacklist"' osd 'allow rwx pool=kube'
+/usr/bin/ceph --cluster ceph auth caps client.kube mon "profile rbd" osd "profile rbd pool=kube"
+/usr/bin/ceph auth get-or-create mgr.${CHOSTNAME} mon 'allow profile mgr' osd 'allow *' mds 'allow *' > /var/lib/ceph/mgr/ceph-${CHOSTNAME}/keyring
 
-sleep 3
+/usr/bin/ceph config-key set mgr/prometheus/server_addr ${OPEROS_CONTROLLER_IP}
 
-etcd_cmd () {
-	        /usr/bin/etcdctl --endpoints=http://127.0.0.1:4279  "$@"
-}
-
+systemctl enable ceph-mgr@${CHOSTNAME}.service
+systemctl start ceph-mgr@${CHOSTNAME}.service
 
 cat /var/lib/ceph/mon/ceph-controller/keyring | etcd_cmd put "cluster/$OPEROS_INSTALL_ID/secret-ceph-mon-keyring"
 cat /etc/ceph/ceph.client.admin.keyring | etcd_cmd put "cluster/$OPEROS_INSTALL_ID/secret-ceph-client-admin-keyring"
 cat /etc/ceph/ceph.conf | etcd_cmd put "cluster/$OPEROS_INSTALL_ID/ceph-config"
 /usr/bin/ceph auth get client.kube | etcd_cmd put "cluster/$OPEROS_INSTALL_ID/secret-ceph-kube-keyring"
+
+wait_for_unit 5 ceph-mgr@${CHOSTNAME}
+if [ $? -ne 0 ] ; then
+	echo "FALTAL: Ceph mgr did not become available after 5 seconds"
+	exit 1
+fi
+
+/usr/bin/ceph mgr module enable prometheus
 
 systemctl disable operos-ceph-mon-init.service
 
