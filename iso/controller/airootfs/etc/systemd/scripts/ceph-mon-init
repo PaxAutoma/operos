@@ -26,7 +26,7 @@ function wait_for_unit {
 		if [ $? -eq 0  ] ; then
 			break
 		fi
-		count=$[$count+1]
+		count=$[$count-1]
 		sleep 1
 	done
 
