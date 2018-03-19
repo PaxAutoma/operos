@@ -49,7 +49,7 @@ kubectl create secret generic ceph-admin-key --type="kubernetes.io/rbd" --from-l
 
 ceph --cluster ceph osd pool create kube 128 128
 
-CEPH_KUBE_CLIENT_KEY=$(ceph --cluster ceph auth get cient.kube | grep "key =" | sed -e "s/key = //")
+CEPH_KUBE_CLIENT_KEY=$(ceph --cluster ceph auth get client.kube | grep "key =" | sed -e "s/key = //")
 
 kubectl create secret generic ceph-secret-kube --type="kubernetes.io/rbd" --from-literal=key1=$CEPH_KUBE_CLIENT_KEY --namespace=default
 

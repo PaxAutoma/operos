@@ -174,7 +174,7 @@ data:
     # * `prometheus.io/path`: If the metrics path is not `/metrics` override this.
     # * `prometheus.io/port`: Scrape the pod on the indicated port instead of the
     # pod's declared ports (default is a port-free target if none are declared).
-        
+
     - job_name: 'kubernetes-nodes-node-exporter'
 
       # Default to scraping over https. If required, just disable this or change to
@@ -203,3 +203,10 @@ data:
         regex: (.+)
         target_label: __metrics_path__
         replacement: /api/v1/nodes/${1}:9100/proxy/metrics
+
+    - job_name: 'ceph-cluster'
+      honor_labels: true
+      static_configs:
+        - targets: ['${OPEROS_CONTROLLER_IP}:9283']
+          labels:
+            instance: ceph_cluster

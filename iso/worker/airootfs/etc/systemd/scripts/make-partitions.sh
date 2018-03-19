@@ -1,12 +1,12 @@
 #!/bin/bash -xe
 # Copyright 2018 Pax Automa Systems, Inc.
-# 
+#
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
-# 
+#
 #    http://www.apache.org/licenses/LICENSE-2.0
-# 
+#
 # Unless required by applicable law or agreed to in writing, software
 # distributed under the License is distributed on an "AS IS" BASIS,
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -36,6 +36,8 @@ repartition() {
     local serial=$2
     local part_size=$3
 
+    # clear all partition table signatures from disk
+    wipefs -a $disk
     sgdisk -og $disk
 
     startsector=`sgdisk -F $disk`
@@ -105,7 +107,7 @@ case $1 in
             if [ "$ptype" != "xfs" ] ; then
                 mkfs.xfs -f ${disk}2
             fi
-            
+
             mkdir -p /var/lib/ceph/osd/ceph-${OSD_ID}
             mount ${disk}2 /var/lib/ceph/osd/ceph-${OSD_ID}
 
@@ -181,7 +183,10 @@ case $1 in
     fi
 
     if (( $init_vg != 0 )) ; then
-        for pd in ${VOLGROUP_MEMBERS[*]} ; do 
+        for pd in ${VOLGROUP_MEMBERS[*]} ; do
+	    # Linux raid metadata blocks may prevent pvcreate from initializing
+	    # the disk with 'Device (/dev/XXXX) excluded by filter)'
+	    dd if=/dev/zero bs=1k count=10 of=$pd
             pvcreate -f $pd
         done
         vgcreate operos_system_vg0 ${VOLGROUP_MEMBERS[*]}
