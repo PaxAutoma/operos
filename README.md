@@ -12,7 +12,7 @@ cloud-native platform:
 - [Ceph](http://ceph.com/) for distributed storage
 - [Calico](https://www.projectcalico.org/) for software-defined container networking
 - [Prometheus](https://prometheus.io/) for metrics collection
-- [isd-dhcpd](https://www.isc.org/downloads/dhcp)/[NginX](https://www.nginx.com/)/[SYSLINUX](http://www.syslinux.org) for hardware provisioning
+- [isc-dhcpd](https://www.isc.org/downloads/dhcp)/[NginX](https://www.nginx.com/)/[SYSLINUX](http://www.syslinux.org) for hardware provisioning
 - [Arch Linux](https://www.archlinux.org/) as the platform
 
 In addition to the above, Operos includes several original components:
