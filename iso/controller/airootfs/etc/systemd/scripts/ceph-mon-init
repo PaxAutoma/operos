@@ -15,15 +15,14 @@
 
 . /etc/paxautoma/settings
 
-function wait_for_unit {
+function wait_for_socket {
 	set +e
 	local attempts=$1
 	shift
 
 	local count=$attempts
 	while [ $count -gt 0 ] ; do
-		systemctl is-active $@ >/dev/null 2>&1
-		if [ $? -eq 0  ] ; then
+		if [ -S $@  ] ; then
 			break
 		fi
 		count=$[$count-1]
@@ -82,7 +81,6 @@ chown ceph /etc/ceph/ceph.mon.keyring
 
 su -s /bin/bash -c "/usr/bin/ceph-mon --cluster ceph --mkfs -i ${CHOSTNAME} --monmap /etc/ceph/monmap --keyring /etc/ceph/ceph.mon.keyring" ceph
 
-
 touch /var/lib/ceph/mon/ceph-${CHOSTNAME}/done
 
 systemctl enable ceph.target ceph-mon.target
@@ -90,7 +88,7 @@ systemctl enable ceph-mon@${CHOSTNAME}.service
 systemctl start ceph-mon@${CHOSTNAME}.service
 
 
-wait_for_unit 5 ceph-mon@${CHOSTNAME}
+wait_for_socket 5 /var/run/ceph/ceph-mon.controller.asok
 if [ $? -ne 0 ] ; then
 	echo "FATAL: Ceph mon did not become available after 5 seconds"
 	exit 1
@@ -110,7 +108,7 @@ cat /etc/ceph/ceph.client.admin.keyring | etcd_cmd put "cluster/$OPEROS_INSTALL_
 cat /etc/ceph/ceph.conf | etcd_cmd put "cluster/$OPEROS_INSTALL_ID/ceph-config"
 /usr/bin/ceph auth get client.kube | etcd_cmd put "cluster/$OPEROS_INSTALL_ID/secret-ceph-kube-keyring"
 
-wait_for_unit 5 ceph-mgr@${CHOSTNAME}
+wait_for_socket 5 /var/run/ceph/ceph-mgr.controller.asok
 if [ $? -ne 0 ] ; then
 	echo "FATAL: Ceph mgr did not become available after 5 seconds"
 	exit 1
