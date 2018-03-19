@@ -30,7 +30,7 @@ EOF
 
 # tftp
 cat > /mnt/etc/conf.d/tftpd <<EOF
-TFTPD_ARGS="--verbose --address ${OPEROS_CONTROLLER_IP} -m /etc//tftpd.mapfile -u ftp --secure /boot"
+TFTPD_ARGS="--verbose --address ${OPEROS_CONTROLLER_IP} -m /etc/tftpd.mapfile -u ftp --secure /boot"
 EOF
 
 # dhcp
