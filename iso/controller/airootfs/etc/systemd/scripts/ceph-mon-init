@@ -38,6 +38,7 @@ function wait_for_unit {
     return 0
 }
 
+export ETCDCTL_API=3
 etcd_cmd () {
 	        /usr/bin/etcdctl --endpoints=http://127.0.0.1:4279  "$@"
 }
@@ -81,7 +82,6 @@ chown ceph /etc/ceph/ceph.mon.keyring
 
 su -s /bin/bash -c "/usr/bin/ceph-mon --cluster ceph --mkfs -i ${CHOSTNAME} --monmap /etc/ceph/monmap --keyring /etc/ceph/ceph.mon.keyring" ceph
 
-export ETCDCTL_API=3
 
 touch /var/lib/ceph/mon/ceph-${CHOSTNAME}/done
 
