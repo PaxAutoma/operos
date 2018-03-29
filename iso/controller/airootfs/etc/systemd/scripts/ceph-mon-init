@@ -83,7 +83,7 @@ su -s /bin/bash -c "/usr/bin/ceph-mon --cluster ceph --mkfs -i ${CHOSTNAME} --mo
 
 touch /var/lib/ceph/mon/ceph-${CHOSTNAME}/done
 
-systemctl enable ceph.target ceph-mon.target
+systemctl enable ceph.target ceph-mon.target ceph-mgr.target
 systemctl enable ceph-mon@${CHOSTNAME}.service
 systemctl start ceph-mon@${CHOSTNAME}.service
 
