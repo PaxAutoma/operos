@@ -92,7 +92,7 @@ end_ip()
 {
     local addr=$(ip2int $1); shift
     local mask=$((0xffffffff << (32 -$1))); shift
-    int2ip $((addr | ~mask<<1))
+    int2ip $(((addr | ~mask) - 1))
 }
 
 int2ip()
