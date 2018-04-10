@@ -29,7 +29,7 @@ The easiest way to get started with Operos is to download a binary ISO image:
 
 [Download the latest ISO binary here](https://www.paxautoma.com/download/operos-iso).
 
-Read [the installation instructions](https://www.paxautoma.com/operos/docs/0.2.0.html).
+Read [the installation instructions](https://www.paxautoma.com/operos/docs/installation.html).
 
 ## Building from source
 
