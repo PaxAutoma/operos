@@ -38,6 +38,6 @@ Before=kubelet.service
 After=network-online.target
 
 [Service]
-ExecStartPre=/usr/bin/chronyd -q -u chrony
+ExecStartPre=-/usr/bin/chronyd -t 90 -q -u chrony
 TimeoutStartSec=infinity
 EOF
