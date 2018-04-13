@@ -5,7 +5,7 @@ DefaultDependencies=no
 
 [Service]
 EnvironmentFile=/etc/paxautoma/settings
-ExecStart=-/sbin/agetty --noclear -o "--private-if ${CONTROLLER_PRIVATE_IF} --public-if ${CONTROLLER_PUBLIC_IF} --node-type Controller --kube-url http://localhost:8080" -l /usr/bin/statustty -n tty1 $TERM
+ExecStart=/etc/systemd/scripts/statustty
 Type=simple
 Restart=always
 RestartSec=0

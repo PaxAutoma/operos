@@ -37,8 +37,8 @@ import (
 
 var canExit = flag.Bool("e", false, "allow user to exit via Ctrl-C")
 var useBootIface = flag.Bool("boot-if", false, "instead of public/private settings, use the interface indicated by the BOOT_IF in the kernel command line")
-var publicIface = flag.String("public-if", "eth0", "public interface")
-var privateIface = flag.String("private-if", "eth1", "private interface")
+var publicIface = flag.String("public-if", "", "public interface")
+var privateIface = flag.String("private-if", "", "private interface")
 var kubeURL = flag.String("kube-url", "", "kubenetes API server URL")
 var nodeType = flag.String("node-type", "Controller", "type of node (Controller/Worker)")
 var debugAddr = flag.String("debug-addr", "", "enable debug server on this address")
@@ -83,23 +83,22 @@ func main() {
 			log.Fatalf("could not obtain boot interface: %v", err)
 		}
 
-		ifaces = []statustty.IfaceSpec{
-			{
-				Title:  "Private",
-				Device: bootIf,
-			},
-		}
+		ifaces = append(ifaces, statustty.IfaceSpec{
+			Title:  "Private",
+			Device: bootIf,
+		})
 	} else {
-		ifaces = []statustty.IfaceSpec{
-			{
-				Title:  "Private",
-				Device: *privateIface,
-			},
-			{
-				Title:  "Public",
-				Device: *publicIface,
-			},
-		}
+		ifaces = append(ifaces, statustty.IfaceSpec{
+			Title:  "Private",
+			Device: *privateIface,
+		})
+	}
+
+	if *publicIface != "" {
+		ifaces = append(ifaces, statustty.IfaceSpec{
+			Title:  "Public",
+			Device: *publicIface,
+		})
 	}
 
 	go func() {

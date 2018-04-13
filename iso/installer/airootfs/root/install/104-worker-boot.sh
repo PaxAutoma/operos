@@ -123,7 +123,7 @@ subnet ${CLUSTER_SN_START} netmask ${CLUSTER_SN_MASK} {
     allow booting;
     range ${CLUSTER_NODE_START} ${CLUSTER_NODE_END};
     option subnet-mask ${CLUSTER_SN_MASK};
-    option routers ${OPEROS_CONTROLLER_IP};
+    option routers ${OPEROS_PRIVATE_GW};
 
     option domain-name "${OPEROS_DNS_DOMAIN}";
     option domain-search "${OPEROS_DNS_DOMAIN}";
