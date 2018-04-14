@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-CONTROLLER_IP=192.168.33.10
+CONTROLLER_IP=${CONTROLLER_IP:-192.168.33.10}
 
 get_credentials() {
     mkdir -p keys
