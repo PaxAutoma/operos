@@ -48,7 +48,7 @@ a TLS certificates for this cluster.`
 	var valid bool
 	validate := func() {
 		errors := menu.Validate()
-		errorList.Text = widgets.JoinValidationErrors(errors)
+		errorList.SetText(widgets.JoinValidationErrors(errors))
 		valid = len(errors) == 0
 		screen.ShowNext(valid)
 	}

@@ -88,7 +88,7 @@ func ValidateIntMinMax(field string, value string, min int, max int) []error {
 
 	if intVal < min || intVal > max {
 		return []error{
-			NewValidationError(field, "is out of bounds"),
+			NewValidationError(field, fmt.Sprintf("must be between %d and %d", min, max)),
 		}
 	}
 	return []error{}

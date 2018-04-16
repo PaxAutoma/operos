@@ -62,9 +62,8 @@ func (p *Par) Render(g *gocui.Gui, container image.Point, fs *FocusableSet) erro
 		fmt.Fprint(v, p.Text)
 		v.SetOrigin(0, 0)
 
-		numLines := strings.Count(p.Text, "\n") + 1
-
 		moveOriginY := func(dy int) {
+			numLines := strings.Count(p.Text, "\n") + 1
 			ox, oy := v.Origin()
 			newY := oy + dy
 			if newY > numLines-(p.Bounds.Dy()-1) {
@@ -140,4 +139,24 @@ func (p *Par) Write(data []byte) (n int, err error) {
 
 	result := <-ch
 	return result.n, result.err
+}
+
+func (p *Par) SetText(text string) {
+	p.Text = text
+
+	if p.g == nil {
+		return
+	}
+
+	p.g.Update(func(g *gocui.Gui) error {
+		v, err := g.View(p.Name)
+		if err != nil {
+			return err
+		}
+
+		v.Clear()
+		fmt.Fprint(v, p.Text)
+
+		return nil
+	})
 }

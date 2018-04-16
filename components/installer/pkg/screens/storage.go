@@ -48,7 +48,7 @@ What percentage of the disk should be used for system storage?`
 	var valid bool
 	validate := func(value string) {
 		errors := widgets.ValidateIntMinMax("Storage percentage", value, 20, 80)
-		errorList.Text = widgets.JoinValidationErrors(errors)
+		errorList.SetText(widgets.JoinValidationErrors(errors))
 		valid = len(errors) == 0
 		screen.ShowNext(valid)
 	}
