@@ -295,7 +295,7 @@ func (t *TeamsterAPI) SetRootPassword(ctx context.Context, req *SetRootPasswordR
 
 		if parts[0] == t.rootAccount {
 			parts[1] = hashedPass
-			parts[2] = fmt.Sprintf("%.0f", time.Since(time.Date(1970, 1, 1, 0, 0, 0, 0, time.UTC)).Hours()/24)
+			parts[2] = fmt.Sprintf("%.0f", time.Since(time.Date(1970, 1, 1, 0, 0, 0, 0, time.UTC)).Hours()/24-1)
 		}
 
 		fmt.Fprintln(tmpFile, strings.Join(parts, ":"))
