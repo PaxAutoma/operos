@@ -249,11 +249,11 @@ order to obtain a TLS certificate and license from Pax Automa.`
 	validate := func() {
 		if ctx.Responses.PublicNetwork.Mode == "dhcp" {
 			valid = true
-			errorList.Text = ""
+			errorList.SetText("")
 		} else {
 			errors := menuStatic.Validate()
 			errors = append(errors, validatePublicNetwork(ctx.Responses.PublicNetwork)...)
-			errorList.Text = widgets.JoinValidationErrors(errors)
+			errorList.SetText(widgets.JoinValidationErrors(errors))
 			valid = len(errors) == 0
 		}
 
@@ -392,7 +392,7 @@ edit the values below.`
 	validate := func() {
 		errors := menu.Validate()
 		errors = append(errors, validateNetworkIps(ctx)...)
-		errorList.Text = widgets.JoinValidationErrors(errors)
+		errorList.SetText(widgets.JoinValidationErrors(errors))
 		valid = len(errors) == 0
 		screen.ShowNext(valid)
 	}
