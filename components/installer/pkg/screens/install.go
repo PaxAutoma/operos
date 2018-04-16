@@ -26,10 +26,10 @@ import (
 	"strings"
 
 	"github.com/jroimartin/gocui"
-	log "github.com/sirupsen/logrus"
 	"github.com/paxautoma/operos/components/common"
 	"github.com/paxautoma/operos/components/common/widgets"
 	installer "github.com/paxautoma/operos/components/installer/pkg"
+	log "github.com/sirupsen/logrus"
 )
 
 func ConfirmationScreen(screenSet *widgets.ScreenSet, context interface{}) *widgets.Screen {
@@ -46,7 +46,7 @@ settings:
     Location:                     {{.OrgInfo.City}}{{if .OrgInfo.Province}}, {{.OrgInfo.Province}}{{end}}, {{.OrgInfo.Country}}
 
     Private interface:            {{.PrivateInterface}}, {{.PrivateSubnet}}
-    Public interface:             {{.PublicNetwork.Interface}}, {{.PublicIPInfo}}
+    Public interface:             {{if ne .PublicNetwork.Mode "disabled"}}{{.PublicNetwork.Interface}}, {{.PublicIPInfo}}{{else}}disabled{{end}}
     Pod subnet:                   {{.PodSubnet}}
     Service subnet:               {{.ServiceSubnet}}
 
@@ -107,6 +107,7 @@ func InstallScreen(screenSet *widgets.ScreenSet, context interface{}) *widgets.S
 		fmt.Sprintf("OPEROS_NODE_MASK=/%s", privateSubnetParts[1]),
 		fmt.Sprintf("OPEROS_POD_CIDR=%s", ctx.Responses.PodSubnet),
 		fmt.Sprintf("OPEROS_SERVICE_CIDR=%s", ctx.Responses.ServiceSubnet),
+		fmt.Sprintf("OPEROS_PRIVATE_GW=%s", ctx.Responses.PrivateGateway),
 		fmt.Sprintf("OPEROS_DNS_SERVICE_IP=%s", ctx.Responses.DNSIP),
 		fmt.Sprintf("OPEROS_DNS_DOMAIN=%s", ctx.Responses.DNSDomain),
 		fmt.Sprintf("OPEROS_WORKER_STORAGE_PERCENTAGE=%d", ctx.Responses.StorageSystemPercentage),

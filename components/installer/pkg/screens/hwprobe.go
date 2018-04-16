@@ -23,10 +23,10 @@ import (
 	"time"
 
 	"github.com/jroimartin/gocui"
-	log "github.com/sirupsen/logrus"
 	"github.com/paxautoma/operos/components/common/widgets"
 	installer "github.com/paxautoma/operos/components/installer/pkg"
 	"github.com/paxautoma/operos/components/installer/pkg/network"
+	log "github.com/sirupsen/logrus"
 )
 
 func HardwareProbeScreen(screenSet *widgets.ScreenSet, context interface{}) *widgets.Screen {
@@ -71,9 +71,9 @@ This can take up to 15 seconds`, 80, 25)
 			g.Update(func(g *gocui.Gui) error {
 				hwErrors := []string{}
 
-				if len(ifaces) < 2 {
+				if len(ifaces) < 1 {
 					hwErrors = append(hwErrors, fmt.Sprintf(
-						"Required: at least 2 physical wired interfaces. This machine has %d.",
+						"Required: at least 1 physical wired interface. This machine has %d.",
 						len(ifaces)))
 				}
 

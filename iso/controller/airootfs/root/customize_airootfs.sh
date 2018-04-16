@@ -20,7 +20,6 @@ chmod 700 /root
 chown 0:0 /root
 
 # Networking
-systemctl enable nat.service
 systemctl enable systemd-networkd.service
 systemctl enable systemd-resolved.service
 
