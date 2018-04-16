@@ -136,6 +136,7 @@ func (t *TeamsterAPI) GenClientCert(w http.ResponseWriter, r *http.Request) {
 	query := r.URL.Query()
 	user := query.Get("user")
 	groups := query["group"]
+	host := query.Get("host")
 
 	if user == "" || len(groups) == 0 {
 		http.Error(w, "request should include 'user' and 'group' arguments", http.StatusBadRequest)
@@ -147,9 +148,11 @@ func (t *TeamsterAPI) GenClientCert(w http.ResponseWriter, r *http.Request) {
 		panic(errors.Wrap(err, "failed to create user credentials"))
 	}
 
-	ip, err := getAPIServerIP(t.cluster.Vars["CONTROLLER_PRIVATE_IF"])
-	if err != nil {
-		panic(errors.Wrap(err, "failed to obtain controller private IP"))
+	if host == "" {
+		host, err = getAPIServerIP(t.cluster.Vars["CONTROLLER_PRIVATE_IF"])
+		if err != nil {
+			panic(errors.Wrap(err, "failed to obtain controller private IP"))
+		}
 	}
 
 	ctx := identity.ClientContext{
@@ -159,8 +162,9 @@ func (t *TeamsterAPI) GenClientCert(w http.ResponseWriter, r *http.Request) {
 		InstallID: t.cluster.InstallID,
 		User:      user,
 	}
-	if ip != "" {
-		ctx.ServerURL = fmt.Sprintf("https://%s:%s", ip, t.cluster.Vars["OPEROS_KUBE_API_SECURE_PORT"])
+
+	if host != "" {
+		ctx.ServerURL = fmt.Sprintf("https://%s:%s", host, t.cluster.Vars["OPEROS_KUBE_API_SECURE_PORT"])
 	}
 
 	tarball.SendTarball(identity.ClientManifest, ctx, w, "operos-credentials.tar.gz")

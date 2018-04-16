@@ -135,6 +135,8 @@ func createAPIServerCSR(ctx *InstallerContext) (csrBytes, keyBytes []byte, errOu
 		Hosts: []string{
 			ctx.Responses.ControllerIP,
 			ctx.Responses.KubeAPIServiceIP,
+			"127.0.0.1",
+			"localhost",
 			"kubernetes.default.svc",
 		},
 		CN: fmt.Sprintf("%s (Controller Server)", ctx.Responses.OrgInfo.Cluster),
