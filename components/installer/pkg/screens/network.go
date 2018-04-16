@@ -421,7 +421,11 @@ edit the values below.`
 	screen.Content = vl
 
 	screen.OnPrev = func() error {
-		screenSet.Back(1)
+		if ctx.Responses.PublicNetwork.Mode == "disabled" {
+			screenSet.Back(2)
+		} else {
+			screenSet.Back(1)
+		}
 		return nil
 	}
 
