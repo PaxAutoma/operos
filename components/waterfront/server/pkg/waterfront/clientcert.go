@@ -21,6 +21,7 @@ import (
 	"log"
 	"net/http"
 	"net/url"
+	"strings"
 )
 
 func MakeGenClientCertHandler(teamsterAddr string) http.Handler {
@@ -33,6 +34,7 @@ func MakeGenClientCertHandler(teamsterAddr string) http.Handler {
 		q := getURL.Query()
 		q.Set("user", "admin")
 		q.Add("group", "admin")
+		q.Set("host", strings.SplitN(r.Host, ":", 2)[0])
 		getURL.RawQuery = q.Encode()
 
 		resp, err := http.Get(getURL.String())
