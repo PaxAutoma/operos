@@ -381,8 +381,9 @@ edit the values below.`
 		widgets.NewEditableListItem("Pod subnet", "pod-subnet", ctx.Responses.PodSubnet, widgets.ValidateIPNet),
 		widgets.NewEditableListItem("Service subnet", "service-subnet", ctx.Responses.ServiceSubnet, widgets.ValidateIPNet),
 		widgets.NewEditableListItem(gatewayLabel, "private-gateway", ctx.Responses.PrivateGateway, widgets.ValidateIP),
+		widgets.NewEditableListItem("Public hostname", "public-hostname", "", nil),
 		widgets.NewEditableListItem("DNS domain", "dns-domain", ctx.Responses.DNSDomain, widgets.ValidateNotEmpty),
-	}, 80, 7)
+	}, 80, 8)
 
 	errorList := widgets.NewPar("par-errors", "")
 	errorList.Bounds = image.Rect(1, 0, 79, 3)
@@ -411,6 +412,8 @@ edit the values below.`
 			ctx.Responses.DNSDomain = item.Value
 		case "private-gateway":
 			ctx.Responses.PrivateGateway = item.Value
+		case "public-hostname":
+			ctx.Responses.PublicHostname = item.Value
 		}
 
 		validate()

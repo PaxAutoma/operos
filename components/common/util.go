@@ -27,3 +27,12 @@ func LogPanic() {
 		logrus.Fatalf("%s: %s", r, debug.Stack())
 	}
 }
+
+func ArrayContains(haystack []string, needle string) bool {
+	for _, item := range haystack {
+		if item == needle {
+			return true
+		}
+	}
+	return false
+}

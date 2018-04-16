@@ -39,6 +39,7 @@ type InstallerResponses struct {
 	PodSubnet               string
 	ServiceSubnet           string
 	PrivateGateway          string
+	PublicHostname          string
 	DNSDomain               string
 	StorageSystemPercentage int
 	ControllerDisk          string

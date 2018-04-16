@@ -27,6 +27,8 @@ import (
 	"github.com/cloudflare/cfssl/signer/local"
 	"github.com/pkg/errors"
 	log "github.com/sirupsen/logrus"
+
+	"github.com/paxautoma/operos/components/common"
 )
 
 func CreateControllerCerts(ctx *InstallerContext) error {
@@ -127,19 +129,25 @@ func createAPISigner(caCertBytes, caKeyBytes []byte) (signer.Signer, error) {
 }
 
 func createAPIServerCSR(ctx *InstallerContext) (csrBytes, keyBytes []byte, errOut error) {
+	hosts := []string{
+		ctx.Responses.ControllerIP,
+		ctx.Responses.KubeAPIServiceIP,
+		"127.0.0.1",
+		"localhost",
+		"kubernetes.default.svc",
+	}
+
+	if ctx.Responses.PublicHostname != "" && !common.ArrayContains(hosts, ctx.Responses.PublicHostname) {
+		hosts = append(hosts, ctx.Responses.PublicHostname)
+	}
+
 	req := &csr.CertificateRequest{
 		KeyRequest: &csr.BasicKeyRequest{
 			A: "rsa",
 			S: 2048,
 		},
-		Hosts: []string{
-			ctx.Responses.ControllerIP,
-			ctx.Responses.KubeAPIServiceIP,
-			"127.0.0.1",
-			"localhost",
-			"kubernetes.default.svc",
-		},
-		CN: fmt.Sprintf("%s (Controller Server)", ctx.Responses.OrgInfo.Cluster),
+		Hosts: hosts,
+		CN:    fmt.Sprintf("%s (Controller Server)", ctx.Responses.OrgInfo.Cluster),
 		Names: []csr.Name{
 			{
 				C:  ctx.Responses.OrgInfo.Country,

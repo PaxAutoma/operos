@@ -109,6 +109,7 @@ func InstallScreen(screenSet *widgets.ScreenSet, context interface{}) *widgets.S
 		fmt.Sprintf("OPEROS_SERVICE_CIDR=%s", ctx.Responses.ServiceSubnet),
 		fmt.Sprintf("OPEROS_PRIVATE_GW=%s", ctx.Responses.PrivateGateway),
 		fmt.Sprintf("OPEROS_DNS_SERVICE_IP=%s", ctx.Responses.DNSIP),
+		fmt.Sprintf("OPEROS_PUBLIC_HOSTNAME=%s", ctx.Responses.PublicHostname),
 		fmt.Sprintf("OPEROS_DNS_DOMAIN=%s", ctx.Responses.DNSDomain),
 		fmt.Sprintf("OPEROS_WORKER_STORAGE_PERCENTAGE=%d", ctx.Responses.StorageSystemPercentage),
 		fmt.Sprintf("OPEROS_CLUSTER_NAME=%s", ctx.Responses.OrgInfo.Cluster),
