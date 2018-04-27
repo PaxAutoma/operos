@@ -1,0 +1,14 @@
+partition_prefix() {
+    local disk=$1
+    if [[ $disk =~ .*[0-9]$ ]]; then
+        echo ${disk}p
+    else
+        echo ${disk}
+    fi
+}
+
+partition_dev() {
+    local disk=$1
+    local part_idx=$2
+    echo $(partition_prefix $disk)${part_idx}
+}
