@@ -13,13 +13,23 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+partition_dev() {
+    local disk=$1
+    local part_idx=$2
+    if [[ $disk =~ .*[0-9]$ ]]; then
+        echo ${disk}p${part_idx}
+    else
+        echo ${disk}${part_idx}
+    fi
+}
+
 check_partition_name() {
     local disk=$1
     local part_idx=$2
     local label=$3
     local fname=/dev/disk/by-partlabel/${label}
 
-    return $([ -e "$fname" -a "$(readlink -f ${fname})" = "${disk}${part_idx}" ])
+    return $([ -e "$fname" -a "$(readlink -f ${fname})" = "$(partition_dev $disk $part_idx)" ])
 }
 
 check_partitions() {
@@ -37,7 +47,7 @@ repartition() {
     local part_size=$3
 
     # clear all partition table signatures from disk
-    wipefs -a $disk
+    wipefs -fa $disk
     sgdisk -og $disk
 
     startsector=`sgdisk -F $disk`
@@ -93,7 +103,7 @@ case $1 in
             echo "Partitions ok, moving on"
         fi
 
-        VOLGROUP_MEMBERS[$VOLGROUP_NMEMBERS]=${disk}1
+        VOLGROUP_MEMBERS[$VOLGROUP_NMEMBERS]=$(partition_dev $disk 1)
         VOLGROUP_NMEMBERS=$((VOLGROUP_NMEMBERS+1))
 
         # osd
@@ -103,13 +113,13 @@ case $1 in
         OSD_KEY=$(cat /etc/paxautoma/osd-loadout | grep "${BDEVUUID}" | cut -d ':' -f 3)
 
         if [ -n "$OSD_ID" ]; then
-            ptype=$(blkid ${disk}2 | grep -Po 'TYPE=\"\K[^ \"]+' || /bin/true)
+            ptype=$(blkid $(partition_dev $disk 2) | grep -Po 'TYPE=\"\K[^ \"]+' || /bin/true)
             if [ "$ptype" != "xfs" ] ; then
-                mkfs.xfs -f ${disk}2
+                mkfs.xfs -f $(partition_dev $disk 2)
             fi
 
             mkdir -p /var/lib/ceph/osd/ceph-${OSD_ID}
-            mount ${disk}2 /var/lib/ceph/osd/ceph-${OSD_ID}
+            mount $(partition_dev $disk 2) /var/lib/ceph/osd/ceph-${OSD_ID}
 
             init_osd=0
             if [ ! -f /var/lib/ceph/osd/ceph-${OSD_ID}/fsid ] ; then

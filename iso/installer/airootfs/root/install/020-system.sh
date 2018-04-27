@@ -15,6 +15,8 @@
 
 echo \> Copying system files >&3
 
+. install/_common
+
 # Mount
 mkdir -p /run/archiso/sfs/airootfs-node
 mount -o loop /run/archiso/bootmnt/operos/x86_64/airootfs-node.sfs /run/archiso/sfs/airootfs-node
@@ -23,7 +25,7 @@ mkdir -p /run/archiso/sfs/airootfs-controller
 mount -o loop /run/archiso/bootmnt/operos/x86_64/airootfs-controller.sfs /run/archiso/sfs/airootfs-controller
 
 mkdir -p /run/archiso/cowspace/controller
-mount ${CONTROLLER_DISK}6 /run/archiso/cowspace/controller/
+mount $(partition_dev $CONTROLLER_DISK 6) /run/archiso/cowspace/controller/
 mkdir /run/archiso/cowspace/controller/{upperdir,workdir}
 
 mount -t overlay overlay \
@@ -31,15 +33,15 @@ mount -t overlay overlay \
     /mnt
 
 mkdir -p /mnt/efi /mnt/boot /mnt/run/archiso/bootmnt
-mount ${CONTROLLER_DISK}2 /mnt/efi
-mount ${CONTROLLER_DISK}3 /mnt/boot
+mount $(partition_dev $CONTROLLER_DISK 2) /mnt/efi
+mount $(partition_dev $CONTROLLER_DISK 3) /mnt/boot
 
 # Kube recommends running without swap. We'll keep the partition around just in
 # case they decide to enable this later, but will not enable it in fstab for
 # now.
-#swapon ${CONTROLLER_DISK}4
+#swapon $(partition_dev $CONTROLLER_DISK 4)
 
-mount ${CONTROLLER_DISK}5 /mnt/run/archiso/bootmnt
+mount $(partition_dev $CONTROLLER_DISK 5) /mnt/run/archiso/bootmnt
 
 # Copy files
 mkdir -p /mnt/run/archiso/bootmnt/operos-${OPEROS_VERSION}/
