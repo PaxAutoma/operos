@@ -32,9 +32,9 @@ import (
 	"strings"
 	"time"
 
-	crypt "github.com/amoghe/go-crypt"
 	"github.com/gorilla/mux"
 	"github.com/pkg/errors"
+	"github.com/tredoe/osutil/user/crypt/sha512_crypt"
 	"golang.org/x/net/context"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/codes"
@@ -136,6 +136,7 @@ func (t *TeamsterAPI) GenClientCert(w http.ResponseWriter, r *http.Request) {
 	query := r.URL.Query()
 	user := query.Get("user")
 	groups := query["group"]
+	api_ip := query["api_ip"]
 
 	if user == "" || len(groups) == 0 {
 		http.Error(w, "request should include 'user' and 'group' arguments", http.StatusBadRequest)
@@ -147,9 +148,15 @@ func (t *TeamsterAPI) GenClientCert(w http.ResponseWriter, r *http.Request) {
 		panic(errors.Wrap(err, "failed to create user credentials"))
 	}
 
-	ip, err := getAPIServerIP(t.cluster.Vars["CONTROLLER_PRIVATE_IF"])
-	if err != nil {
-		panic(errors.Wrap(err, "failed to obtain controller private IP"))
+	var ip string
+
+	if len(api_ip) == 0 || api_ip[0] == "" {
+		ip, err = getAPIServerIP(t.cluster.Vars["CONTROLLER_PRIVATE_IF"])
+		if err != nil {
+			panic(errors.Wrap(err, "failed to obtain controller private IP"))
+		}
+	} else {
+		ip = api_ip[0]
 	}
 
 	ctx := identity.ClientContext{
@@ -256,7 +263,8 @@ func (t *TeamsterAPI) SetRootPassword(ctx context.Context, req *SetRootPasswordR
 	}
 
 	// crypt(3) the password
-	hashedPass, err := crypt.Crypt(req.Password, fmt.Sprintf("$6$%s$", salt))
+	sha512Crypt := sha512_crypt.New()
+	hashedPass, err := sha512Crypt.Generate([]byte(req.Password), []byte(fmt.Sprintf("$6$%s$", salt)))
 	if err != nil {
 		return nil, errors.Wrap(err, "failed to hash password")
 	}

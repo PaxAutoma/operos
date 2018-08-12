@@ -33,6 +33,7 @@ func MakeGenClientCertHandler(teamsterAddr string) http.Handler {
 		q := getURL.Query()
 		q.Set("user", "admin")
 		q.Add("group", "admin")
+		q.Add("api_ip", r.Host)
 		getURL.RawQuery = q.Encode()
 
 		resp, err := http.Get(getURL.String())
