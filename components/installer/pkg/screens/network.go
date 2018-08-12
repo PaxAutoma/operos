@@ -114,7 +114,7 @@ will be used to access the Controller UI and API.
 
 Which interface should be used for the public network?`
 
-	items := make([]widgets.MenuItem, len(ctx.Interfaces.Ordered)-1)
+	items := make([]widgets.MenuItem, len(ctx.Interfaces.Ordered))
 	idx := 0
 	selectedIdx := -1
 	for _, iface := range ctx.Interfaces.Ordered {
@@ -126,10 +126,22 @@ Which interface should be used for the public network?`
 			idx++
 		}
 	}
+	items[idx] = &widgets.SimpleMenuItem{
+		Text:  "<disabled>",
+		Value: "",
+	}
 
 	menu := widgets.NewMenu("menu-public-ifs", items, 80, 8)
 	menu.OnSelectItem = func(item widgets.MenuItem) error {
 		smi := item.(*widgets.SimpleMenuItem)
+
+		if smi.Value == "" {
+			ctx.Responses.PublicNetwork.Mode = "disabled"
+			// force user to set the gateway for the private network
+			ctx.Responses.PrivateGateway = ""
+		} else if ctx.Responses.PublicNetwork.Mode == "disabled" {
+			ctx.Responses.PublicNetwork = installer.DefaultContext.Responses.PublicNetwork
+		}
 		ctx.Responses.PublicNetwork.Interface = smi.Value
 		return nil
 	}
@@ -144,6 +156,11 @@ Which interface should be used for the public network?`
 		return nil
 	}
 	screen.OnNext = func() error {
+		if ctx.Responses.PublicNetwork.Mode == "disabled" {
+			screenSet.Forward(2)
+			return nil
+		}
+
 		if ctx.Responses.PublicNetwork.Mode == "dhcp" && ctx.Interfaces.ByName[ctx.Responses.PublicNetwork.Interface].DhcpOffer == "" {
 			message := fmt.Sprintf(`
  A DHCP server was not detected on the network connected to %s;
@@ -232,11 +249,11 @@ order to obtain a TLS certificate and license from Pax Automa.`
 	validate := func() {
 		if ctx.Responses.PublicNetwork.Mode == "dhcp" {
 			valid = true
-			errorList.Text = ""
+			errorList.SetText("")
 		} else {
 			errors := menuStatic.Validate()
 			errors = append(errors, validatePublicNetwork(ctx.Responses.PublicNetwork)...)
-			errorList.Text = widgets.JoinValidationErrors(errors)
+			errorList.SetText(widgets.JoinValidationErrors(errors))
 			valid = len(errors) == 0
 		}
 
@@ -354,12 +371,19 @@ func NetworkSettingsIpsScreen(screenSet *widgets.ScreenSet, context interface{})
 	screen.Message = `The following IPs and domain settings will be used for the cluster. You can
 edit the values below.`
 
+	gatewayLabel := "Gateway for workers"
+	if ctx.Responses.PublicNetwork.Mode == "disabled" {
+		gatewayLabel = "Gateway"
+	}
+
 	menu := widgets.NewEditableList("eli-ips", []*widgets.EditableListItem{
 		widgets.NewEditableListItem("Private subnet", "private-subnet", ctx.Responses.PrivateSubnet, widgets.ValidateIPNet),
 		widgets.NewEditableListItem("Pod subnet", "pod-subnet", ctx.Responses.PodSubnet, widgets.ValidateIPNet),
 		widgets.NewEditableListItem("Service subnet", "service-subnet", ctx.Responses.ServiceSubnet, widgets.ValidateIPNet),
+		widgets.NewEditableListItem(gatewayLabel, "private-gateway", ctx.Responses.PrivateGateway, widgets.ValidateIP),
+		widgets.NewEditableListItem("Public hostname", "public-hostname", "", nil),
 		widgets.NewEditableListItem("DNS domain", "dns-domain", ctx.Responses.DNSDomain, widgets.ValidateNotEmpty),
-	}, 80, 6)
+	}, 80, 8)
 
 	errorList := widgets.NewPar("par-errors", "")
 	errorList.Bounds = image.Rect(1, 0, 79, 3)
@@ -369,7 +393,7 @@ edit the values below.`
 	validate := func() {
 		errors := menu.Validate()
 		errors = append(errors, validateNetworkIps(ctx)...)
-		errorList.Text = widgets.JoinValidationErrors(errors)
+		errorList.SetText(widgets.JoinValidationErrors(errors))
 		valid = len(errors) == 0
 		screen.ShowNext(valid)
 	}
@@ -386,6 +410,10 @@ edit the values below.`
 			ctx.Responses.ServiceSubnet = item.Value
 		case "dns-domain":
 			ctx.Responses.DNSDomain = item.Value
+		case "private-gateway":
+			ctx.Responses.PrivateGateway = item.Value
+		case "public-hostname":
+			ctx.Responses.PublicHostname = item.Value
 		}
 
 		validate()
@@ -396,7 +424,11 @@ edit the values below.`
 	screen.Content = vl
 
 	screen.OnPrev = func() error {
-		screenSet.Back(1)
+		if ctx.Responses.PublicNetwork.Mode == "disabled" {
+			screenSet.Back(2)
+		} else {
+			screenSet.Back(1)
+		}
 		return nil
 	}
 

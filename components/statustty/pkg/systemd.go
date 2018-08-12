@@ -94,7 +94,7 @@ func (stats *UnitStats) Delete(name string) {
 }
 
 func (stats *UnitStats) Update(unit *dbus.UnitStatus) {
-	logrus.Debugf("unit update: %s / %s / %s", unit.Name, unit.ActiveState, unit.SubState)
+	//logrus.Debugf("unit update: %s / %s / %s", unit.Name, unit.ActiveState, unit.SubState)
 
 	stats.Delete(unit.Name)
 

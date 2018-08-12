@@ -38,6 +38,8 @@ type InstallerResponses struct {
 	PrivateSubnet           string
 	PodSubnet               string
 	ServiceSubnet           string
+	PrivateGateway          string
+	PublicHostname          string
 	DNSDomain               string
 	StorageSystemPercentage int
 	ControllerDisk          string
@@ -85,6 +87,7 @@ func init() {
 	// Initialize default values in the context
 	DefaultContext.Responses.PublicNetwork.Mode = "dhcp"
 	DefaultContext.Responses.PrivateSubnet = "192.168.33.10/24"
+	DefaultContext.Responses.PrivateGateway = "192.168.33.10"
 	DefaultContext.Responses.PodSubnet = "10.10.0.0/16"
 	DefaultContext.Responses.ServiceSubnet = "10.11.0.0/16"
 	DefaultContext.Responses.DNSDomain = "cluster.local"

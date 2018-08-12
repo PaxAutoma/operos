@@ -92,7 +92,7 @@ end_ip()
 {
     local addr=$(ip2int $1); shift
     local mask=$((0xffffffff << (32 -$1))); shift
-    int2ip $((addr | ~mask<<1))
+    int2ip $(((addr | ~mask) - 1))
 }
 
 int2ip()
@@ -123,7 +123,7 @@ subnet ${CLUSTER_SN_START} netmask ${CLUSTER_SN_MASK} {
     allow booting;
     range ${CLUSTER_NODE_START} ${CLUSTER_NODE_END};
     option subnet-mask ${CLUSTER_SN_MASK};
-    option routers ${OPEROS_CONTROLLER_IP};
+    option routers ${OPEROS_PRIVATE_GW};
 
     option domain-name "${OPEROS_DNS_DOMAIN}";
     option domain-search "${OPEROS_DNS_DOMAIN}";

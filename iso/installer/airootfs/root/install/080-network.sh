@@ -23,7 +23,7 @@ Name=${CONTROLLER_PUBLIC_IF}
 [Network]
 DHCP=ipv4
 EOF
-else
+elif [ "$CONTROLLER_PUBLIC_IF_MODE" = "static" ]; then
     cat > /mnt/etc/systemd/network/10-public.network <<EOF
 [Match]
 Name=${CONTROLLER_PUBLIC_IF}
@@ -44,5 +44,14 @@ Address=${OPEROS_CONTROLLER_IP}${OPEROS_NODE_MASK}
 [Route]
 Destination=${OPEROS_SERVICE_CIDR}
 EOF
+
+if [ "$CONTROLLER_PUBLIC_IF_MODE" = "disabled" ]; then
+    cat >> /mnt/etc/systemd/network/20-private.network <<EOF
+[Route]
+Gateway=${OPEROS_PRIVATE_GW}
+EOF
+else
+    arch-chroot /mnt systemctl enable nat.service
+fi
 
 ln -sf /run/systemd/resolve/resolv.conf /mnt/etc/resolv.conf

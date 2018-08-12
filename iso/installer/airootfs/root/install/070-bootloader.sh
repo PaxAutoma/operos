@@ -15,6 +15,10 @@
 
 echo \> Installing bootloader >&3
 
+. install/_common
+
+disk_prefix=$(partition_prefix $CONTROLLER_DISK)
+
 install_bios() {
     # install MBR
     dd bs=440 conv=notrunc count=1 if=/usr/lib/syslinux/bios/gptmbr.bin of=${CONTROLLER_DISK}
@@ -29,7 +33,7 @@ EOF
 
     # set up syslinux
     arch-chroot /mnt extlinux --install /boot
-    sed -i "s/%CONTROLLER_DISK%/${CONTROLLER_DISK//\//\\\/}/g;
+    sed -i "s/%CONTROLLER_DISK%/${disk_prefix//\//\\\/}/g;
             s/%OPEROS_VERSION%/${OPEROS_VERSION}/g;" /mnt/boot/syslinux-controller/*.cfg
 }
 
@@ -46,7 +50,7 @@ install_efi() {
     cp efiboot/loader/entries/operos.conf /mnt/efi/loader/entries/operos-${OPEROS_VERSION}.conf 
 
     find /mnt/efi/loader -name "*.conf" -exec \
-        sed -i "s/%CONTROLLER_DISK%/${CONTROLLER_DISK//\//\\\/}/g;
+        sed -i "s/%CONTROLLER_DISK%/${disk_prefix//\//\\\/}/g;
                 s/%OPEROS_VERSION%/${OPEROS_VERSION}/g;" {} \;
 
     # install the systemd-boot efi binaries

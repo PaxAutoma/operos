@@ -1,0 +1,14 @@
+#!/bin/bash
+
+args="
+    --private-if ${CONTROLLER_PRIVATE_IF}
+    --node-type Controller
+    --kube-url http://localhost:8080
+"
+
+if [[ -n "${CONTROLLER_PUBLIC_IF}" ]]; then
+    args="$args --public-if ${CONTROLLER_PUBLIC_IF}"
+fi
+
+echo Running agetty with $args
+exec /sbin/agetty --noclear -o "$args" -l /usr/bin/statustty -n tty1 $TERM

@@ -17,6 +17,8 @@ set -x
 
 echo \> Partitioning disk >&3
 
+. install/_common || exit 1
+
 # Disable LVM volumes to let go of disk devices
 vgchange -an
 
@@ -47,8 +49,8 @@ sleep 3
 partprobe -s $CONTROLLER_DISK
 
 # Make file systems
-yes | mkfs.fat -F32 ${CONTROLLER_DISK}2
-yes | mkfs.ext4 -O \^64bit ${CONTROLLER_DISK}3
-yes | mkswap ${CONTROLLER_DISK}4
-yes | mkfs.ext4 ${CONTROLLER_DISK}5
-yes | mkfs.ext4 ${CONTROLLER_DISK}6
+yes | mkfs.fat -F32 $(partition_dev $CONTROLLER_DISK 2)
+yes | mkfs.ext4 -O \^64bit $(partition_dev $CONTROLLER_DISK 3)
+yes | mkswap $(partition_dev $CONTROLLER_DISK 4)
+yes | mkfs.ext4 $(partition_dev $CONTROLLER_DISK 5)
+yes | mkfs.ext4 $(partition_dev $CONTROLLER_DISK 6)

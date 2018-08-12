@@ -1,7 +1,7 @@
 [Unit]
 Description=Pacman keyring initialization
-Wants=haveged.service
-After=haveged.service
+Wants=haveged.service chronyd.service
+After=haveged.service chronyd.service
 Requires=etc-pacman.d-gnupg.mount
 After=etc-pacman.d-gnupg.mount
 
