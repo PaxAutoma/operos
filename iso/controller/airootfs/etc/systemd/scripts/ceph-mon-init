@@ -114,7 +114,7 @@ if [ $? -ne 0 ] ; then
 	exit 1
 fi
 
-/usr/bin/ceph mgr module enable prometheus
+/usr/bin/ceph mgr module enable prometheus --force
 
 systemctl disable operos-ceph-mon-init.service
 
