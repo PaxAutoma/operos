@@ -18,6 +18,7 @@ package installer
 
 import (
 	"fmt"
+	"strings"
 
 	"github.com/cloudflare/cfssl/config"
 	"github.com/cloudflare/cfssl/csr"
@@ -127,17 +128,31 @@ func createAPISigner(caCertBytes, caKeyBytes []byte) (signer.Signer, error) {
 }
 
 func createAPIServerCSR(ctx *InstallerContext) (csrBytes, keyBytes []byte, errOut error) {
+	var hosts []string
+	if ctx.Responses.PublicNetwork.Mode != "dhcp" {
+		cidr_bd := strings.Split(ctx.Responses.PublicNetwork.Subnet, "/")
+		public_ip := cidr_bd[0]
+		hosts = []string{
+			ctx.Responses.ControllerIP,
+			ctx.Responses.KubeAPIServiceIP,
+			"kubernetes.default.svc",
+			public_ip,
+		}
+	} else {
+		hosts = []string{
+			ctx.Responses.ControllerIP,
+			ctx.Responses.KubeAPIServiceIP,
+			"kubernetes.default.svc",
+		}
+	}
 	req := &csr.CertificateRequest{
 		KeyRequest: &csr.BasicKeyRequest{
 			A: "rsa",
 			S: 2048,
 		},
-		Hosts: []string{
-			ctx.Responses.ControllerIP,
-			ctx.Responses.KubeAPIServiceIP,
-			"kubernetes.default.svc",
-		},
-		CN: fmt.Sprintf("%s (Controller Server)", ctx.Responses.OrgInfo.Cluster),
+
+		Hosts: hosts,
+		CN:    fmt.Sprintf("%s (Controller Server)", ctx.Responses.OrgInfo.Cluster),
 		Names: []csr.Name{
 			{
 				C:  ctx.Responses.OrgInfo.Country,
