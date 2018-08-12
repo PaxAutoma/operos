@@ -122,8 +122,8 @@ case $1 in
 
             if [ $init_osd -eq 1 ] ; then
                 rm -rf /var/lib/ceph/osd/ceph-${OSD_ID}/*
-                ceph-osd -i ${OSD_ID} --mkfs --osd-uuid $BDEVUUID
                 printf "[osd.$OSD_ID]\n\tkey = $OSD_KEY\n" > /var/lib/ceph/osd/ceph-${OSD_ID}/keyring
+                ceph-osd -i ${OSD_ID} --mkfs --osd-uuid $BDEVUUID
                 chown -R ceph:ceph /var/lib/ceph/osd/ceph-${OSD_ID}
             fi
 
