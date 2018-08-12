@@ -35,7 +35,7 @@ type Systemd struct {
 }
 
 func NewSystemd() (*Systemd, error) {
-	conn, err := dbus.NewSystemdConnection()
+	conn, err := dbus.NewSystemConnection()
 	if err != nil {
 		return nil, errors.Wrap(err, "could not initialize systemd connection")
 	}
