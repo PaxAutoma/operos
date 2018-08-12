@@ -13,8 +13,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-echo "nameserver 10.128.128.1" > /etc/resolv.conf
-
 rm -rf /opt/isobuild/out/*
 rsync -a --info=progress2 --delete --exclude out --exclude .git /home/vagrant/operos/. /opt/isobuild
 

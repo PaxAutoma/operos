@@ -15,10 +15,6 @@
 provision = <<EOF
 set -x -e
 
-cat > /etc/resolv.conf <<RESOLV
-nameserver 10.128.128.1
-RESOLV
-
 cat >> /etc/pacman.conf <<PACMAN
 [paxautoma]
 SigLevel = Optional TrustAll
@@ -62,7 +58,7 @@ Vagrant.configure("2") do |config|
   config.vm.box = "archlinux64"
   config.vm.box_check_update = true
 
-  config.vm.network "private_network", ip: "192.168.33.5", auto_config: false
+  config.vm.network "private_network", ip: "192.168.72.5", auto_config: false
 
   config.vm.define "isobuild" do |isovm|
     isovm.vm.hostname = "isobuild"
