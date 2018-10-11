@@ -1,10 +1,8 @@
-hash: e177083aea3df9eca02f1ba0fc928a68aec618688ecbbfc0682887fcbcc8a588
-updated: 2018-01-11T13:58:08.297136017-08:00
+hash: 6804e1bdd9c58b77c16def65caf340f219780ad723163da71537e4f67989e9c0
+updated: 2018-08-11T14:38:58.981961796-07:00
 imports:
-- name: github.com/amoghe/go-crypt
-  version: f85b640b0eefd979ef9bb2e919b53fe66f8b7b39
 - name: github.com/cloudflare/cfssl
-  version: db0d0650b6496bfe8061ec56a92edd32d8e75c30
+  version: 5d63dbd981b5c408effbb58c442d54761ff94fbd
   subpackages:
   - auth
   - certdb
@@ -22,22 +20,23 @@ imports:
   - signer
   - signer/local
 - name: github.com/coreos/etcd
-  version: 9e079d8f02af4f1fabcd015994d60051d22024f3
+  version: fca8add78a9d926166eb739b8e4a124434025ba3
   subpackages:
   - auth/authpb
   - clientv3
   - etcdserver/api/v3rpc/rpctypes
   - etcdserver/etcdserverpb
   - mvcc/mvccpb
+  - pkg/types
 - name: github.com/coreos/go-systemd
-  version: d2196463941895ee908e13531a23a39feb9e1243
+  version: 39ca1b05acc7ad1220e09f133283b8859a8b71ab
   subpackages:
   - dbus
   - journal
 - name: github.com/d2g/dhcp4
   version: a1d1b6c41b1ce8a71a5121a9cee31809c4707d9c
 - name: github.com/davecgh/go-spew
-  version: 782f4967f2dc4564575ca782fe2d04090b5faca8
+  version: 8991bc29aa16c548c550c7ff78260e27b9ab7c73
   subpackages:
   - spew
 - name: github.com/docker/distribution
@@ -77,7 +76,7 @@ imports:
 - name: github.com/golang/glog
   version: 44145f04b68cf362d9c4df2182967c2275eaefed
 - name: github.com/golang/protobuf
-  version: 1e59b77b52bf8e4b449a57e6f79f21226d571845
+  version: 89a0c16f4dc2a70c0ed864d8ef64878f24fdaa51
   subpackages:
   - jsonpb
   - proto
@@ -87,15 +86,16 @@ imports:
   - ptypes/duration
   - ptypes/struct
   - ptypes/timestamp
-- name: github.com/google/certificate-transparency
-  version: 6e5648d13b43cdde25cc8274b87675230ffefbd6
-  repo: https://github.com/google/certificate-transparency
+- name: github.com/google/certificate-transparency-go
+  version: c2346e8d716462dde4cc603d25da78ae9511122b
   subpackages:
-  - go
-  - go/asn1
-  - go/client
-  - go/x509
-  - go/x509/pkix
+  - asn1
+  - client
+  - client/configpb
+  - jsonclient
+  - tls
+  - x509
+  - x509/pkix
 - name: github.com/google/gofuzz
   version: 44d81051d367757e1c7c6a5a86423ece9afcf63c
 - name: github.com/google/uuid
@@ -103,23 +103,24 @@ imports:
 - name: github.com/gorilla/context
   version: 08b5f424b9271eedf6f9f0ce86cb9396ed337a42
 - name: github.com/gorilla/handlers
-  version: 90663712d74cb411cbef281bc1e08c19d1a76145
+  version: 7e0847f9db758cdebd26c149d0ae9d5d0b9c98ce
 - name: github.com/gorilla/mux
-  version: 7f08801859139f86dfafd1c296e2cba9a80d292e
+  version: e3702bed27f0d39777b0b37b664b6280e8ef8fbf
 - name: github.com/gorilla/securecookie
-  version: e59506cc896acb7f7bf732d4fdf5e25f7ccd8983
+  version: 78f3d318a8bf316cda921f25e96fd0b441c5173d
 - name: github.com/gorilla/sessions
-  version: ca9ada44574153444b00d3fd9c8559e4cc95f896
+  version: 03b6f63cc43ef9c7240a635a5e22b13180e822b8
 - name: github.com/grpc-ecosystem/go-grpc-middleware
-  version: d0c54e68681ec7999ac17864470f3bee6521ba2b
+  version: e9c5d9645c437ab1b204cff969a2c0fb16cd4276
   subpackages:
   - logging
   - logging/logrus
+  - logging/logrus/ctxlogrus
   - recovery
   - tags
   - tags/logrus
 - name: github.com/grpc-ecosystem/grpc-gateway
-  version: 07f5e79768022f9a3265235f0db4ac8c3f675fec
+  version: 92583770e3f01b09a0d3e9bdf64321d8bebd48f2
   subpackages:
   - runtime
   - runtime/internal
@@ -129,7 +130,7 @@ imports:
 - name: github.com/imdario/mergo
   version: 6633656539c1639d9d78127b7d47c622b5d7b6dc
 - name: github.com/jroimartin/gocui
-  version: 4f518eddb04b8f73870836b6d1941e8aa3c06637
+  version: c055c87ae801372cd74a0839b972db4f7697ae5f
 - name: github.com/juju/ratelimit
   version: 5b9ff866471762aa2ab2dced63c9fb6f53921342
 - name: github.com/mailru/easyjson
@@ -142,13 +143,10 @@ imports:
   version: 9e777a8366cce605130a531d2cd6363d07ad7317
   subpackages:
   - runewidth.go
-- name: github.com/mreiferson/go-httpclient
-  version: 63fe23f7434723dc904c901043af07931f293c47
-  repo: https://github.com/mreiferson/go-httpclient
 - name: github.com/msteinert/pam
   version: f4cd9f5e29232537a12db1678f48c702ad6896b7
 - name: github.com/nsf/termbox-go
-  version: aa4a75b1c20a2b03751b1a9f7e41d58bd6f71c43
+  version: 5c94acc5e6eb520f1bcd183974e01171cc4c23b3
 - name: github.com/pkg/errors
   version: 645ef00459ed84a119197bfb8d8205042c6df63d
 - name: github.com/PuerkitoBio/purell
@@ -158,46 +156,58 @@ imports:
 - name: github.com/rlisagor/dhcp4client
   version: 1c767008cab9cb0b047b5d55a7bcb5cc7e3d26fa
 - name: github.com/sirupsen/logrus
-  version: d682213848ed68c0a260ca37d6dd5ace8423f5ba
+  version: 3e01752db0189b9157070a0e1668a620f9a85da2
 - name: github.com/spf13/pflag
   version: e57e3eeb33f795204c1ca35f56c44f83227c6e66
 - name: github.com/stretchr/testify
-  version: b91bfb9ebec76498946beb6af7c0230c7cc7ba6c
+  version: f35b8ab0b5a2cef36673838d662e249dd9c94686
   subpackages:
   - assert
   - require
+- name: github.com/tredoe/osutil
+  version: 7d3ee1afa71c90fd1514c8f557ae6c5f414208eb
+  subpackages:
+  - user/crypt
+  - user/crypt/common
+  - user/crypt/sha512_crypt
 - name: github.com/ugorji/go
   version: bdcc60b419d136a85cdf2e7cbcac34b3f1cd6e57
   subpackages:
   - codec
 - name: github.com/wercker/journalhook
-  version: 158dbb9fcbfcc3386437e516bc71b58690606e91
+  version: 5d0a5ae867b354cbbbd2a9ab8d66b4f96cfaa741
 - name: golang.org/x/crypto
-  version: 5f55bce93ad2c89f411e009659bb1fd83da36e7b
+  version: de0752318171da717af4ce24d0a2e8626afaeb11
   subpackages:
+  - cryptobyte
+  - cryptobyte/asn1
+  - ocsp
   - pkcs12
   - pkcs12/internal/rc2
   - ssh/terminal
 - name: golang.org/x/net
-  version: ab555f366c4508dbe0802550b1b20c46c5c18aa0
+  version: c39426892332e1bb5ec0a434a079bf82f5d30c54
   subpackages:
   - context
+  - context/ctxhttp
+  - http/httpguts
   - http2
   - http2/hpack
   - idna
   - internal/timeseries
-  - lex/httplex
   - trace
 - name: golang.org/x/sys
-  version: 810d7000345868fc619eb81f46307107118f4ae1
+  version: 98c5dad5d1a0e8a73845ecc8897d0bd56586511d
   subpackages:
   - unix
   - windows
 - name: golang.org/x/text
-  version: e19ae1496984b1c655b8044a65c0300a3c878dd3
+  version: 6e3c4e7365ddcc329f090f96e4348398f6310088
   subpackages:
   - cases
   - internal
+  - internal/language
+  - internal/language/compact
   - internal/tag
   - language
   - runes
@@ -208,12 +218,12 @@ imports:
   - unicode/norm
   - width
 - name: google.golang.org/genproto
-  version: a8101f21cf983e773d0c1133ebc5424792003214
+  version: 383e8b2c3b9e36c4076b235b32537292176bae20
   subpackages:
   - googleapis/api/annotations
   - googleapis/rpc/status
 - name: google.golang.org/grpc
-  version: 7cea4cc846bcf00cbb27595b07da5de875ef7de9
+  version: 32fb0ac620c32ba40a4626ddf94d90d12cce3455
   subpackages:
   - balancer
   - balancer/base
@@ -222,10 +232,15 @@ imports:
   - connectivity
   - credentials
   - encoding
-  - grpclb/grpc_lb_v1/messages
+  - encoding/proto
   - grpclog
   - health/grpc_health_v1
   - internal
+  - internal/backoff
+  - internal/channelz
+  - internal/envconfig
+  - internal/grpcrand
+  - internal/transport
   - keepalive
   - metadata
   - naming
@@ -236,7 +251,6 @@ imports:
   - stats
   - status
   - tap
-  - transport
 - name: gopkg.in/inf.v0
   version: 3887ee99ecf07df5b447e9b00d9c0b2adaa9f3e4
 - name: gopkg.in/yaml.v2
@@ -366,7 +380,6 @@ imports:
   - util/integer
 testImports:
 - name: github.com/pmezard/go-difflib
-  version: 792786c7400a136282c1664665ae0a8db921c6c2
-  repo: https://github.com/pmezard/go-difflib
+  version: d8ed2627bdf02c080bf22230dbb337003b7aba2d
   subpackages:
   - difflib

@@ -1,6 +1,6 @@
 [Unit]
 Description=TTY status display
-After=systemd-journald.service
+After=dbus.socket
 DefaultDependencies=no
 
 [Service]

@@ -32,9 +32,9 @@ import (
 	"strings"
 	"time"
 
-	crypt "github.com/amoghe/go-crypt"
 	"github.com/gorilla/mux"
 	"github.com/pkg/errors"
+	"github.com/tredoe/osutil/user/crypt/sha512_crypt"
 	"golang.org/x/net/context"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/codes"
@@ -260,7 +260,8 @@ func (t *TeamsterAPI) SetRootPassword(ctx context.Context, req *SetRootPasswordR
 	}
 
 	// crypt(3) the password
-	hashedPass, err := crypt.Crypt(req.Password, fmt.Sprintf("$6$%s$", salt))
+	sha512Crypt := sha512_crypt.New()
+	hashedPass, err := sha512Crypt.Generate([]byte(req.Password), []byte(fmt.Sprintf("$6$%s$", salt)))
 	if err != nil {
 		return nil, errors.Wrap(err, "failed to hash password")
 	}

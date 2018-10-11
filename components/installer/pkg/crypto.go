@@ -18,6 +18,7 @@ package installer
 
 import (
 	"fmt"
+	"strings"
 
 	"github.com/cloudflare/cfssl/config"
 	"github.com/cloudflare/cfssl/csr"
@@ -129,12 +130,26 @@ func createAPISigner(caCertBytes, caKeyBytes []byte) (signer.Signer, error) {
 }
 
 func createAPIServerCSR(ctx *InstallerContext) (csrBytes, keyBytes []byte, errOut error) {
-	hosts := []string{
-		ctx.Responses.ControllerIP,
-		ctx.Responses.KubeAPIServiceIP,
-		"127.0.0.1",
-		"localhost",
-		"kubernetes.default.svc",
+	var hosts []string
+	if ctx.Responses.PublicNetwork.Mode != "dhcp" {
+		cidr_bd := strings.Split(ctx.Responses.PublicNetwork.Subnet, "/")
+		public_ip := cidr_bd[0]
+		hosts = []string{
+			ctx.Responses.ControllerIP,
+			ctx.Responses.KubeAPIServiceIP,
+			"127.0.0.1",
+			"localhost",
+			"kubernetes.default.svc",
+			public_ip,
+		}
+	} else {
+		hosts = []string{
+			ctx.Responses.ControllerIP,
+			ctx.Responses.KubeAPIServiceIP,
+			"127.0.0.1",
+			"localhost",
+			"kubernetes.default.svc",
+		}
 	}
 
 	if ctx.Responses.PublicHostname != "" && !common.ArrayContains(hosts, ctx.Responses.PublicHostname) {
